@@ -519,7 +519,7 @@
         <li>行程頁每個選項卡片左上角有 ☑️ 勾選框，當天決定去哪就勾哪個。</li>
         <li>勾完按每天底部的「生成當日行程地圖連結」，會產出一天完整路線的 Google Maps 連結，直接傳給朋友。</li>
         <li>景點卡片右上有「📖 景點故事」按鈕，點開有照片、遊記式介紹與該怎麼玩的攻略。</li>
-        <li>花費分頁已預填 Gloria、Samba、Hann 三人名字，紀錄存在雲端，夥伴打開網頁都是最新版；只有進入「記帳模式」才能編輯。</li>
+        <li>花費分頁已預填 Gloria、Samba、Hann 三人名字，紀錄存在雲端，夥伴打開網頁都是最新版；只有按「Hann 記帳專用」才能編輯。</li>
         <li>回程 20:00 班次，班表請出發前於台灣高鐵 APP 確認。</li>
       </ul>
     </div>
@@ -950,7 +950,7 @@
     <h2>旅行花費記錄與分帳</h2>
     <div class="ledger-top">
       <span id="cloudStatus" class="cloud-status">☁️ 連線中…</span>
-      <button id="editToggle" class="edit-toggle">✏️ 進入記帳模式</button>
+      <button id="editToggle" class="edit-toggle">✏️ Hann 記帳專用</button>
     </div>
     <h2>花費記錄</h2>
     <div id="expenseList"></div>
@@ -1635,7 +1635,7 @@
           cloudStatusEl.textContent = "☁️ 已載入雲端最新紀錄";
         }
       } else {
-        cloudStatusEl.textContent = "☁️ 雲端尚無紀錄，進入記帳模式開始記";
+        cloudStatusEl.textContent = "☁️ 雲端尚無紀錄，點 Hann 記帳專用開始記";
       }
     } catch (e) { cloudStatusEl.textContent = "⚠️ 離線中，暫時顯示本機紀錄"; }
   })();
@@ -1644,7 +1644,7 @@
   const editToggle = document.getElementById("editToggle");
   function applyEditMode() {
     document.getElementById("page-budget").classList.toggle("locked", !editMode);
-    editToggle.textContent = editMode ? "🔒 鎖定（只開放查看）" : "✏️ 進入記帳模式";
+    editToggle.textContent = editMode ? "🔒 鎖定（只開放查看）" : "✏️ Hann 記帳專用";
     sessionStorage.setItem("ledgerEdit", editMode ? "1" : "0");
   }
   editToggle.addEventListener("click", () => { editMode = !editMode; applyEditMode(); });
