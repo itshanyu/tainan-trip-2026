@@ -348,24 +348,19 @@
     color: var(--mint-deep); background: var(--mint-soft);
     border: 2px dashed var(--mint); border-radius: 14px; padding: 12px; width: 100%; min-height: 48px;
   }
-  .share-btn {
-    font-family: inherit; font-size: 0.88rem; font-weight: 700; cursor: pointer;
-    color: var(--mint-deep); background: #fff;
-    border: 1.5px solid var(--mint); border-radius: 14px; padding: 12px; width: 100%; min-height: 48px;
-    margin-top: 10px;
+  .ledger-top {
+    display: flex; align-items: center; justify-content: space-between; gap: 8px;
+    background: var(--sky-soft); border: 1px solid #D5E6F7; border-radius: 14px;
+    padding: 10px 14px; margin-bottom: 14px; flex-wrap: wrap;
   }
-  .import-banner {
-    background: var(--butter-soft); border: 1.5px solid var(--butter);
-    border-radius: 14px; padding: 12px 14px; margin-bottom: 4px;
-    font-size: 0.85rem; font-weight: 600; color: var(--butter-deep);
-    display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  .cloud-status { font-size: 0.78rem; font-weight: 600; color: var(--sky-deep); }
+  .edit-toggle {
+    font-family: inherit; font-size: 0.8rem; font-weight: 700; cursor: pointer;
+    border: none; border-radius: 999px; padding: 8px 14px; min-height: 40px;
+    background: var(--accent); color: #5C3D1E;
   }
-  .import-banner button {
-    font-family: inherit; font-weight: 700; border: none; border-radius: 999px;
-    padding: 8px 14px; cursor: pointer; min-height: 40px;
-  }
-  #importYes { background: var(--mint); color: #fff; }
-  #importNo { background: #fff; color: var(--text-light); }
+  #page-budget.locked .exp-card { pointer-events: none; opacity: 0.82; }
+  #page-budget.locked .add-btn { display: none; }
   .settle-card {
     background: var(--card); border-radius: var(--radius); padding: 16px;
     box-shadow: 0 2px 8px rgba(91,83,80,0.06);
@@ -524,7 +519,7 @@
         <li>行程頁每個選項卡片左上角有 ☑️ 勾選框，當天決定去哪就勾哪個。</li>
         <li>勾完按每天底部的「生成當日行程地圖連結」，會產出一天完整路線的 Google Maps 連結，直接傳給朋友。</li>
         <li>景點卡片右上有「📖 景點故事」按鈕，點開有照片、遊記式介紹與該怎麼玩的攻略。</li>
-        <li>花費分頁已預填 Gloria、Samba、Hann 三人名字，記帳、算誰該給誰錢都會自動用名字顯示；紀錄各自存在每台手機，用「複製分享連結」可以同步給夥伴。</li>
+        <li>花費分頁已預填 Gloria、Samba、Hann 三人名字，紀錄存在雲端，夥伴打開網頁都是最新版；只有進入「記帳模式」才能編輯。</li>
         <li>回程 20:00 班次，班表請出發前於台灣高鐵 APP 確認。</li>
       </ul>
     </div>
@@ -953,17 +948,14 @@
   <!-- ================= 花費 ================= -->
   <section class="page" id="page-budget">
     <h2>旅行花費記錄與分帳</h2>
-    <div id="importBanner" class="import-banner" style="display:none;">
-      <span>📥 偵測到夥伴分享的紀錄</span>
-      <button id="importYes">匯入（覆蓋本機）</button>
-      <button id="importNo">忽略</button>
+    <div class="ledger-top">
+      <span id="cloudStatus" class="cloud-status">☁️ 連線中…</span>
+      <button id="editToggle" class="edit-toggle">✏️ 進入記帳模式</button>
     </div>
     <h2>花費記錄</h2>
     <div id="expenseList"></div>
     <button class="add-btn" id="addExpense">＋ 新增一筆花費</button>
-    <div class="hint">每筆填：項目、金額、誰先付錢、哪些人要分攤（3 人吃飯通常是全勾；個人購物就只勾自己）。紀錄存在這台裝置的瀏覽器，重整不會消失；三台手機是各自獨立的，用下面的分享連結互相同步。</div>
-    <button class="share-btn" id="shareExp">📋 複製分享連結，同步紀錄給夥伴</button>
-    <div class="hint">最順的用法：指定一個人當記帳手統一記錄，或各自記完用分享連結把紀錄傳給下一個人合併。</div>
+    <div class="hint">每筆填：項目、金額、誰先付錢、哪些人要分攤（3 人吃飯通常是全勾；個人購物就只勾自己）。紀錄存在雲端：你在這裡更新的內容，夥伴打開網頁就會看到最新版。</div>
 
     <h2>結算：誰該給誰多少錢</h2>
     <div class="settle-card">
@@ -1383,6 +1375,8 @@
 
   /* ---------- expense splitter ---------- */
   const EXP_KEY = "tainan-expense-v2";
+  const CLOUD_KEY = "tainan-trip-2026-exp-9f3a8b2c4d1e";
+  let cloudTimer = null;
   let members = ["Gloria", "Samba", "Hann"];
   let expenses = [
     { item: "高鐵來回車票", amount: 2700, note: "桃園↔台南 對號標準廂", payer: 0, shares: [true, true, true], mode: "equal", custom: [0, 0, 0] },
@@ -1403,8 +1397,9 @@
   }
   function save() {
     try {
-      localStorage.setItem(EXP_KEY, JSON.stringify({ members, expenses }));
+      localStorage.setItem(EXP_KEY, JSON.stringify({ members: members, expenses: expenses }));
     } catch (e) {}
+    saveCloud();
   }
   const fmt = n => "NT$" + Math.round(n).toLocaleString("zh-TW");
 
@@ -1610,48 +1605,50 @@
   renderExpenses();
   renderSettle();
 
-  /* ---------- 分享／匯入紀錄 ---------- */
-  function encodeExp() {
-    return btoa(unescape(encodeURIComponent(JSON.stringify({ members: members, expenses: expenses }))));
+  /* ---------- 雲端同步：我記帳，大家打開都看得到 ---------- */
+  const cloudStatusEl = document.getElementById("cloudStatus");
+  function saveCloud() {
+    clearTimeout(cloudTimer);
+    cloudTimer = setTimeout(() => {
+      fetch("https://textdb.online/update", {
+        method: "POST",
+        body: new URLSearchParams({ key: CLOUD_KEY, value: JSON.stringify({ members: members, expenses: expenses }) })
+      }).then(r => r.json()).then(j => {
+        cloudStatusEl.textContent = (j && j.status === 1)
+          ? "☁️ 已同步 " + new Date().toLocaleTimeString("zh-TW", { hour: "2-digit", minute: "2-digit" })
+          : "⚠️ 同步失敗，紀錄仍保存在本機";
+      }).catch(() => { cloudStatusEl.textContent = "⚠️ 離線中，紀錄仍保存在本機"; });
+    }, 1500);
   }
-  function decodeExp(code) {
-    try {
-      const d = JSON.parse(decodeURIComponent(escape(atob(code))));
-      return d && Array.isArray(d.expenses) ? d : null;
-    } catch (e) { return null; }
-  }
-  const shareBtn = document.getElementById("shareExp");
-  shareBtn.addEventListener("click", () => {
-    const url = location.origin + location.pathname + "#exp=" + encodeExp();
-    const reset = () => { shareBtn.textContent = "📋 複製分享連結，同步紀錄給夥伴"; };
-    navigator.clipboard.writeText(url).then(() => {
-      shareBtn.textContent = "✅ 已複製！傳給夥伴，對方打開就能匯入";
-      setTimeout(reset, 2500);
-    }).catch(() => {
-      window.prompt("複製以下連結傳給夥伴：", url);
-    });
-  });
 
-  const hashMatch = location.hash.match(/#exp=(.+)$/);
-  if (hashMatch) {
-    const data = decodeExp(decodeURIComponent(hashMatch[1]));
-    const banner = document.getElementById("importBanner");
-    if (data) {
-      banner.style.display = "flex";
-      document.getElementById("importYes").addEventListener("click", () => {
-        if (Array.isArray(data.members) && data.members.length === 3) members = data.members;
-        expenses = data.expenses;
-        save();
-        renderMembers(); renderExpenses(); renderSettle();
-        banner.style.display = "none";
-        history.replaceState(null, "", location.pathname);
-      });
-      document.getElementById("importNo").addEventListener("click", () => {
-        banner.style.display = "none";
-        history.replaceState(null, "", location.pathname);
-      });
-    }
+  (async () => {
+    try {
+      const r = await fetch("https://textdb.online/" + CLOUD_KEY, { cache: "no-store" });
+      const t = (await r.text()).trim();
+      if (t) {
+        const d = JSON.parse(t);
+        if (Array.isArray(d.expenses)) {
+          expenses = d.expenses;
+          if (Array.isArray(d.members) && d.members.length === 3) members = d.members;
+          try { localStorage.setItem(EXP_KEY, JSON.stringify({ members: members, expenses: expenses })); } catch (e) {}
+          renderMembers(); renderExpenses(); renderSettle();
+          cloudStatusEl.textContent = "☁️ 已載入雲端最新紀錄";
+        }
+      } else {
+        cloudStatusEl.textContent = "☁️ 雲端尚無紀錄，進入記帳模式開始記";
+      }
+    } catch (e) { cloudStatusEl.textContent = "⚠️ 離線中，暫時顯示本機紀錄"; }
+  })();
+
+  let editMode = sessionStorage.getItem("ledgerEdit") === "1";
+  const editToggle = document.getElementById("editToggle");
+  function applyEditMode() {
+    document.getElementById("page-budget").classList.toggle("locked", !editMode);
+    editToggle.textContent = editMode ? "🔒 鎖定（只開放查看）" : "✏️ 進入記帳模式";
+    sessionStorage.setItem("ledgerEdit", editMode ? "1" : "0");
   }
+  editToggle.addEventListener("click", () => { editMode = !editMode; applyEditMode(); });
+  applyEditMode();
 </script>
 
 </body>
