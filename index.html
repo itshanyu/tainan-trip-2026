@@ -1,0 +1,1434 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<meta name="apple-mobile-web-app-title" content="台南三天兩夜">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#DFA77E">
+<title>台南三天兩夜｜10/25-10/27 旅行規劃</title>
+<style>
+  :root {
+    --bg: #FFF8EC;
+    --card: #FFFFFF;
+    --text: #4A3F35;
+    --text-light: #9A8C7E;
+    --accent: #DFA77E;
+    --gold: #F5B700;
+    --mint: #1F7A5C;
+    --mint-deep: #1F7A5C;
+    --mint-soft: #E3F2EB;
+    --butter: #F5B700;
+    --butter-soft: #FFF3D6;
+    --butter-deep: #8A6A00;
+    --rose: #E0452B;
+    --rose-soft: #FDECE7;
+    --rose-deep: #C23A22;
+    --lavender: #DFA77E;
+    --lavender-soft: #F5E8DC;
+    --lavender-deep: #A67449;
+    --sky: #2F7DD1;
+    --sky-soft: #E7F1FB;
+    --sky-deep: #2F7DD1;
+    --radius: 18px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 17px;
+    line-height: 1.65;
+    padding-bottom: 84px;
+  }
+  .wrap { max-width: 560px; margin: 0 auto; padding: 16px 16px 30px; }
+
+  .page { display: none; animation: fadeIn 0.25s ease; }
+  .page.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+  header {
+    background: linear-gradient(135deg, #DFA77E 0%, #F5B700 100%);
+    border-radius: 24px; padding: 30px 24px 26px; text-align: center; margin-bottom: 18px;
+    color: #fff;
+    box-shadow: 0 4px 16px rgba(223,167,126,0.28);
+  }
+  header h1 { font-size: 1.85rem; font-weight: 800; letter-spacing: 2px; color: #5C3D1E; }
+  header .dates {
+    display: inline-block; margin-top: 10px; padding: 6px 18px;
+    background: rgba(255,255,255,0.94); border-radius: 999px; font-size: 0.92rem; color: #7A5A38; font-weight: 600;
+  }
+  .badges { margin-top: 14px; display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+  .badge { font-size: 0.78rem; padding: 5px 14px; border-radius: 999px; font-weight: 600; }
+  .badge.theme { background: var(--rose); color: #fff; }
+  .badge.sight { background: var(--lavender); color: #5C3D1E; }
+  .badge.hotel { background: var(--butter); color: #6B4E00; }
+
+  h2 {
+    font-size: 1.12rem; margin: 26px 0 12px; padding-left: 12px;
+    border-left: 5px solid var(--accent); letter-spacing: 1px;
+  }
+
+  .summary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  @media (max-width: 520px) { .summary-grid { grid-template-columns: 1fr; } }
+  .summary-card {
+    background: var(--card); border-radius: var(--radius); padding: 14px 16px;
+    box-shadow: 0 2px 8px rgba(91,83,80,0.06);
+  }
+  .summary-card .label { font-size: 0.73rem; color: var(--text-light); letter-spacing: 1px; }
+  .summary-card .value { font-size: 0.92rem; font-weight: 600; margin-top: 2px; }
+  .summary-card .sub { font-size: 0.8rem; color: var(--text-light); }
+
+  .seg {
+    display: flex; background: #F5EBD8; border-radius: 14px; padding: 4px; gap: 4px;
+    margin-bottom: 12px; position: sticky; top: 12px; z-index: 10;
+  }
+  .seg button {
+    flex: 1; border: none; background: transparent; border-radius: 11px;
+    padding: 9px 4px; font-size: 0.88rem; font-weight: 600; color: var(--text-light);
+    font-family: inherit; cursor: pointer; transition: all 0.2s ease; min-height: 44px;
+  }
+  .seg button.active { background: #fff; color: var(--text); box-shadow: 0 2px 6px rgba(74,63,53,0.12); }
+  .seg button .seg-sub { display: block; font-size: 0.68rem; font-weight: 500; }
+  .day-panel { display: none; }
+  .day-panel.active { display: block; animation: fadeIn 0.25s ease; }
+
+  .day-map {
+    background: var(--sky-soft); border: 1px solid #D5E6F7; border-radius: 14px;
+    padding: 12px 16px; margin-bottom: 14px;
+    display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap;
+  }
+  .day-map .dm-label { font-size: 0.85rem; font-weight: 600; color: var(--sky-deep); }
+  .day-map .dm-sub { font-size: 0.75rem; color: var(--text-light); }
+  .map-btn {
+    font-family: inherit; font-size: 0.8rem; font-weight: 700; text-decoration: none;
+    color: #fff; background: linear-gradient(135deg, #2AA876, #1F7A5C);
+    border: none; border-radius: 999px; padding: 8px 18px; cursor: pointer;
+    display: inline-flex; align-items: center; justify-content: center; min-height: 44px;
+  }
+  .gen-btn {
+    font-family: inherit; font-size: 0.88rem; font-weight: 700; cursor: pointer;
+    color: #5C3D1E; background: linear-gradient(135deg, #DFA77E, #F5B700);
+    border: none; border-radius: 14px; padding: 12px 20px; width: 100%; min-height: 48px;
+    box-shadow: 0 3px 10px rgba(223,167,126,0.35);
+  }
+  .gen-result {
+    margin-top: 12px; display: none;
+    background: var(--lavender-soft); border-radius: 14px; padding: 12px 14px;
+    font-size: 0.8rem;
+  }
+  .gen-result.show { display: block; }
+  .gen-result a { color: var(--lavender-deep); word-break: break-all; }
+  .copy-tip { color: var(--text-light); margin-top: 4px; }
+
+  .day-card {
+    background: var(--card); border-radius: var(--radius); padding: 20px 18px;
+    box-shadow: 0 2px 10px rgba(91,83,80,0.06);
+  }
+  .day-title { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
+  .day-chip {
+    width: 52px; height: 52px; border-radius: 16px; flex-shrink: 0;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; font-weight: 700;
+  }
+  .day-chip .d { font-size: 1.05rem; line-height: 1.2; }
+  .day-chip .w { font-size: 0.68rem; font-weight: 500; }
+  .d1 { background: var(--butter-soft); color: var(--butter-deep); }
+  .d2 { background: var(--mint-soft); color: var(--mint-deep); }
+  .d3 { background: var(--lavender-soft); color: var(--lavender-deep); }
+  .day-title h3 { font-size: 1.02rem; }
+  .day-title .theme { font-size: 0.78rem; color: var(--text-light); }
+
+  .timeline { list-style: none; margin-top: 14px; }
+  .timeline li {
+    position: relative; padding: 0 0 18px 26px;
+    border-left: 2px dashed #E5DCD4; margin-left: 8px;
+  }
+  .timeline li:last-child { border-left-color: transparent; padding-bottom: 4px; }
+  .timeline li::before {
+    content: ""; position: absolute; left: -7px; top: 5px;
+    width: 12px; height: 12px; border-radius: 50%; background: var(--mint);
+    border: 2.5px solid #fff; box-shadow: 0 0 0 1.5px var(--mint);
+  }
+  .timeline li.food::before { background: var(--rose); box-shadow: 0 0 0 1.5px var(--rose); }
+  .timeline li.move::before { background: var(--sky); box-shadow: 0 0 0 1.5px var(--sky); }
+  .timeline li.pin::before { background: var(--lavender); box-shadow: 0 0 0 1.5px var(--lavender); }
+  .t-time { font-size: 16px; color: var(--text-light); font-weight: 700; letter-spacing: 0.5px; }
+  .t-title { font-weight: 700; font-size: 17px; margin-top: 1px; }
+  .t-note { font-size: 16px; color: var(--text-light); margin-top: 2px; }
+
+  .pill {
+    display: inline-block; font-size: 0.71rem; padding: 2px 10px; border-radius: 999px;
+    margin-right: 5px; margin-top: 6px; font-weight: 600;
+  }
+  .pill.addr { background: var(--butter-soft); color: var(--butter-deep); }
+  .pill.transit { background: var(--sky-soft); color: var(--sky-deep); }
+  .pill.tip { background: var(--rose-soft); color: var(--rose-deep); }
+  .pill.free { background: var(--mint-soft); color: var(--mint-deep); }
+
+  /* ---------- option cards ---------- */
+  .opts { margin-top: 8px; display: grid; gap: 10px; }
+  .opt {
+    background: var(--bg); border-radius: 14px; padding: 12px 14px;
+    border: 1px solid #F3E6D0;
+  }
+  .opt-head {
+    font-size: 17px; font-weight: 700;
+    display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+  }
+  .opt-name { flex: 1; min-width: 120px; }
+
+  .pick { position: absolute; opacity: 0; pointer-events: none; }
+  .opt-check {
+    flex-shrink: 0; width: 22px; height: 22px; border-radius: 7px;
+    border: 2px solid #D8CCC0; background: #fff; cursor: pointer;
+    display: inline-flex; align-items: center; justify-content: center;
+    transition: all 0.15s ease; position: relative;
+  }
+  .pick:checked + .opt-check { background: var(--mint); border-color: var(--mint); }
+  .pick:checked + .opt-check::after {
+    content: "✓"; color: #fff; font-size: 0.85rem; font-weight: 800; position: absolute;
+  }
+  .li-check { display: inline-block; margin-right: 8px; vertical-align: -3px; }
+
+  .opt-tag {
+    flex-shrink: 0; font-size: 0.66rem; font-weight: 700; padding: 2px 8px;
+    border-radius: 999px; letter-spacing: 0.5px;
+  }
+  .tag-out { background: var(--mint-soft); color: var(--mint-deep); }
+  .tag-in { background: var(--sky-soft); color: var(--sky-deep); }
+  .tag-exp { background: var(--lavender-soft); color: var(--lavender-deep); }
+  .tag-niche { background: var(--butter-soft); color: var(--butter-deep); }
+  .tag-food { background: var(--rose-soft); color: var(--rose-deep); }
+  .map-link {
+    flex-shrink: 0; font-size: 0.72rem; font-weight: 600;
+    color: #3E7BC0; text-decoration: none; background: #EDF4FB;
+    padding: 2px 10px; border-radius: 999px;
+  }
+  .opt-desc { font-size: 17px; color: var(--text); margin-top: 6px; }
+  .opt-desc b { color: var(--rose-deep); }
+  .opt-meta {
+    font-size: 0.76rem; color: var(--text-light); margin-top: 7px;
+    display: flex; flex-wrap: wrap; gap: 4px 14px;
+  }
+  .opt-meta span { white-space: nowrap; }
+  .opt-veg {
+    font-size: 0.78rem; color: var(--mint-deep); background: var(--mint-soft);
+    border-radius: 10px; padding: 6px 10px; margin-top: 7px;
+  }
+  .opt-warn {
+    font-size: 0.78rem; color: var(--rose-deep); background: var(--rose-soft);
+    border-radius: 10px; padding: 6px 10px; margin-top: 7px;
+  }
+
+  /* ---------- story modal ---------- */
+  .story-btn {
+    flex-shrink: 0; font-family: inherit; font-size: 0.72rem; font-weight: 700;
+    color: #5C3D1E; background: linear-gradient(135deg, #DFA77E, #F5B700);
+    border: none; border-radius: 999px; padding: 3px 11px; cursor: pointer;
+  }
+  .story-modal {
+    display: none; position: fixed; inset: 0; z-index: 200;
+    background: rgba(91,83,80,0.5); backdrop-filter: blur(3px);
+    align-items: flex-end; justify-content: center;
+  }
+  .story-modal.show { display: flex; }
+  .story-box {
+    position: relative; background: var(--bg); width: 100%; max-width: 560px;
+    max-height: 88vh; overflow-y: auto; border-radius: 24px 24px 0 0;
+    padding: 26px 20px 34px; animation: slideUp 0.28s ease;
+  }
+  @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: none; opacity: 1; } }
+  .story-close {
+    position: sticky; top: 0; float: right; z-index: 5;
+    width: 34px; height: 34px; border-radius: 50%; border: none; cursor: pointer;
+    background: #fff; color: var(--text); font-size: 1rem; font-weight: 700;
+    box-shadow: 0 2px 8px rgba(91,83,80,0.2);
+  }
+  .story-title { font-size: 1.25rem; font-weight: 800; margin: 6px 0 4px; }
+  .story-sub { font-size: 0.78rem; color: var(--text-light); margin-bottom: 12px; }
+  .story-photo {
+    width: 100%; border-radius: 16px; margin: 8px 0 4px; display: block;
+    background: var(--sky-soft); min-height: 120px; object-fit: cover;
+  }
+  .story-photo-holder {
+    text-align: center; font-size: 3rem; padding: 26px 0;
+    background: var(--sky-soft); border-radius: 16px; margin: 8px 0 4px;
+  }
+  .story-photo-credit { font-size: 0.66rem; color: var(--text-light); margin-bottom: 12px; }
+  .story-sec { font-size: 0.88rem; margin-top: 14px; }
+  .story-sec h4 { font-size: 0.86rem; color: var(--mint-deep); margin-bottom: 4px; }
+  .story-sec p { font-size: 0.84rem; color: var(--text); }
+  .story-sec ul { padding-left: 20px; }
+  .story-sec li { font-size: 0.84rem; margin-bottom: 4px; }
+  .story-wiki {
+    background: #fff; border-radius: 14px; padding: 12px 14px; margin-top: 12px;
+    font-size: 0.8rem; color: var(--text-light);
+  }
+  .story-wiki b { color: var(--text); }
+
+  /* ---------- expense page ---------- */
+  .member-setup {
+    background: var(--card); border-radius: var(--radius); padding: 16px;
+    box-shadow: 0 2px 8px rgba(91,83,80,0.06);
+  }
+  .member-setup .label { font-size: 0.78rem; color: var(--text-light); margin-bottom: 8px; }
+  .member-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+  .member-row input {
+    width: 100%; border: 1.5px solid #E5DCD4; border-radius: 12px;
+    padding: 9px 10px; font-size: 0.88rem; font-family: inherit; color: var(--text);
+    background: var(--bg);
+  }
+  .member-row input:focus { outline: none; border-color: var(--mint); }
+
+  .exp-card {
+    background: var(--card); border-radius: var(--radius); padding: 14px;
+    box-shadow: 0 2px 8px rgba(91,83,80,0.06); margin-bottom: 10px;
+    position: relative;
+  }
+  .exp-card .exp-top { display: grid; grid-template-columns: 1fr 110px; gap: 8px; }
+  .exp-card input, .exp-card select {
+    width: 100%; border: 1.5px solid #E5DCD4; border-radius: 12px;
+    padding: 8px 10px; font-size: 0.86rem; font-family: inherit; color: var(--text);
+    background: var(--bg);
+  }
+  .exp-card input:focus, .exp-card select:focus { outline: none; border-color: var(--mint); }
+  .exp-card .exp-note { margin-top: 8px; }
+  .exp-card .exp-people { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
+  .exp-card .exp-people .who { font-size: 0.76rem; color: var(--text-light); font-weight: 600; }
+  .share-label {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 0.78rem; font-weight: 600; cursor: pointer;
+    background: var(--bg); border: 1px solid #E5DCD4; border-radius: 999px;
+    padding: 4px 10px; color: var(--text-light); transition: all 0.15s ease;
+  }
+  .share-label:has(input:checked) { background: var(--mint-soft); border-color: var(--mint); color: var(--mint-deep); }
+  .share-label input { position: absolute; opacity: 0; pointer-events: none; }
+  .share-label .dot { width: 8px; height: 8px; border-radius: 50%; background: #D8CCC0; }
+  .share-label:has(input:checked) .dot { background: var(--mint-deep); }
+  .exp-del {
+    position: absolute; top: 8px; right: 8px; border: none; cursor: pointer;
+    width: 26px; height: 26px; border-radius: 8px; background: var(--rose-soft);
+    color: var(--rose-deep); font-size: 0.85rem; font-weight: 700;
+  }
+  .add-btn {
+    font-family: inherit; font-size: 0.92rem; font-weight: 700; cursor: pointer;
+    color: var(--mint-deep); background: var(--mint-soft);
+    border: 2px dashed var(--mint); border-radius: 14px; padding: 12px; width: 100%; min-height: 48px;
+  }
+  .settle-card {
+    background: var(--card); border-radius: var(--radius); padding: 16px;
+    box-shadow: 0 2px 8px rgba(91,83,80,0.06);
+  }
+  .settle-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-top: 10px; }
+  .settle-person {
+    background: var(--bg); border-radius: 14px; padding: 12px 10px; text-align: center;
+  }
+  .settle-person .pname { font-size: 0.82rem; font-weight: 700; }
+  .settle-person .pline { font-size: 0.72rem; color: var(--text-light); margin-top: 4px; }
+  .settle-person .pval { font-size: 0.9rem; font-weight: 700; }
+  .settle-person .diff-pos { color: var(--mint-deep); }
+  .settle-person .diff-neg { color: var(--rose-deep); }
+  .settle-person .diff-zero { color: var(--text-light); }
+  .transfers { margin-top: 12px; display: grid; gap: 8px; }
+  .transfer-item {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--butter-soft); border-radius: 12px; padding: 10px 14px;
+    font-size: 0.88rem; font-weight: 600; color: var(--butter-deep);
+  }
+  .transfer-item .arrow { font-size: 1rem; }
+  .hint { font-size: 0.76rem; color: var(--text-light); margin-top: 8px; }
+  .saved-tip { font-size: 0.72rem; color: var(--text-light); text-align: center; margin-top: 10px; }
+
+  /* ---------- weather ---------- */
+  .weather-card {
+    background: linear-gradient(135deg, var(--sky-soft) 0%, var(--mint-soft) 100%);
+    border-radius: var(--radius); padding: 18px;
+    box-shadow: 0 2px 8px rgba(91,83,80,0.06);
+  }
+  .w-now { display: flex; align-items: center; gap: 14px; }
+  .w-icon { font-size: 3rem; line-height: 1; }
+  .w-temp { font-size: 2rem; font-weight: 800; line-height: 1.1; }
+  .w-desc { font-size: 0.88rem; color: var(--sky-deep); font-weight: 600; }
+  .w-details {
+    display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: 12px;
+    font-size: 0.8rem; color: var(--text-light);
+  }
+  .w-details b { color: var(--text); }
+  .w-days { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-top: 14px; }
+  .w-day {
+    background: #fff; border-radius: 14px; padding: 10px 6px; text-align: center;
+    box-shadow: 0 1px 4px rgba(91,83,80,0.05);
+  }
+  .w-day .d-date { font-size: 0.78rem; font-weight: 700; }
+  .w-day .d-tag { font-size: 0.64rem; color: var(--lavender-deep); background: var(--lavender-soft); border-radius: 999px; padding: 1px 8px; display: inline-block; margin-top: 2px; font-weight: 700; }
+  .w-day .d-icon { font-size: 1.6rem; margin: 4px 0 2px; }
+  .w-day .d-temp { font-size: 0.78rem; font-weight: 600; }
+  .w-day .d-rain { font-size: 0.7rem; color: var(--sky-deep); }
+  .w-refresh {
+    font-family: inherit; font-size: 0.8rem; font-weight: 700; cursor: pointer;
+    border: none; background: #fff; color: var(--sky-deep);
+    border-radius: 999px; padding: 10px 18px; margin-top: 12px; min-height: 44px;
+  }
+  .w-src { font-size: 0.68rem; color: var(--text-light); margin-top: 8px; }
+  .w-error { font-size: 0.82rem; color: var(--rose-deep); }
+
+  .tips { background: var(--card); border-radius: var(--radius); padding: 18px;
+    box-shadow: 0 2px 8px rgba(74,63,53,0.06); }
+  .tips ul { padding-left: 20px; }
+  .tips li { font-size: 17px; margin-bottom: 6px; }
+
+  footer { text-align: center; font-size: 0.74rem; color: var(--text-light); margin-top: 30px; }
+
+  .tabbar {
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(255,255,255,0.96); backdrop-filter: blur(10px);
+    border-top: 1px solid #F3E6D0;
+    display: flex; justify-content: center;
+    padding: 8px 0 max(8px, env(safe-area-inset-bottom));
+  }
+  .tabbar-inner { display: flex; width: 100%; max-width: 480px; }
+  .tab {
+    flex: 1; border: none; background: transparent; font-family: inherit;
+    display: flex; flex-direction: column; align-items: center; gap: 2px;
+    padding: 8px 0 6px; cursor: pointer; color: var(--text-light);
+    border-radius: 14px; transition: color 0.2s ease; min-height: 48px;
+  }
+  .tab .icon { font-size: 20px; line-height: 1; filter: grayscale(0.7); opacity: 0.65; transition: all 0.2s ease; }
+  .tab .tab-label { font-size: 11px; font-weight: 600; letter-spacing: 1px; }
+  .tab.active { color: var(--lavender-deep); }
+  .tab.active .icon { filter: none; opacity: 1; transform: translateY(-2px) scale(1.08); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <!-- ================= 總覽 ================= -->
+  <section class="page active" id="page-home">
+    <header>
+      <h1>台南三天兩夜</h1>
+      <div class="dates">2026.10.25（六）～ 10.27（一）</div>
+      <div class="badges">
+        <span class="badge theme">自我療癒大師</span>
+        <span class="badge sight">埃及展導覽 10/27 13:30</span>
+        <span class="badge hotel">宿：安平雅樂軒</span>
+      </div>
+    </header>
+
+    <h2>台南即時天氣</h2>
+    <div class="weather-card">
+      <div class="w-now">
+        <div class="w-icon" id="w-icon">⏳</div>
+        <div>
+          <div class="w-temp" id="w-temp">載入中</div>
+          <div class="w-desc" id="w-desc">正在取得台南天氣…</div>
+        </div>
+      </div>
+      <div class="w-details">
+        <span>🥵 體感 <b id="w-feel">--</b></span>
+        <span>🌧️ 降雨機率 <b id="w-rain">--</b></span>
+        <span>💧 濕度 <b id="w-hum">--</b></span>
+        <span>💨 風速 <b id="w-wind">--</b></span>
+      </div>
+      <div class="w-days" id="w-days"></div>
+      <button class="w-refresh" id="w-refresh">🔄 更新天氣</button>
+      <div class="w-src" id="w-src">資料來源：Open-Meteo（開啟網頁時自動更新）</div>
+    </div>
+
+    <h2>行程總覽</h2>
+    <div class="summary-grid">
+      <div class="summary-card">
+        <div class="label">住宿</div>
+        <div class="value">台南安平雅樂軒酒店</div>
+        <div class="sub">安平區光州路108號 ☎ 06-390-5000</div>
+        <div class="sub">入住 15:00 起｜退房 12:00 前（以飯店公告為準）</div>
+      </div>
+      <div class="summary-card">
+        <div class="label">去程</div>
+        <div class="value">10/25 13:43 桃園出發</div>
+        <div class="sub">高鐵南下，約 15:20 抵台南</div>
+      </div>
+      <div class="summary-card">
+        <div class="label">回程</div>
+        <div class="value">10/27 20:00 前後班次</div>
+        <div class="sub">建議 19:30 前抵達高鐵站</div>
+      </div>
+    </div>
+
+    <h2>兩大固定行程</h2>
+    <div class="summary-grid">
+      <div class="summary-card">
+        <div class="label">10/26（日）10:00</div>
+        <div class="value">萬國通路創意觀光工廠</div>
+        <div class="sub">歸仁區中正南路二段1號，免門票</div>
+      </div>
+      <div class="summary-card">
+        <div class="label">10/27（一）13:30-14:30</div>
+        <div class="value">奇美博物館埃及展導覽</div>
+        <div class="sub">仁德區文華路二段66號</div>
+      </div>
+    </div>
+
+    <h2>使用說明</h2>
+    <div class="tips">
+      <ul>
+        <li>行程頁每個選項卡片左上角有 ☑️ 勾選框，當天決定去哪就勾哪個。</li>
+        <li>勾完按每天底部的「生成當日行程地圖連結」，會產出一天完整路線的 Google Maps 連結，直接傳給朋友。</li>
+        <li>景點卡片右上有「📖 景點故事」按鈕，點開有照片、遊記式介紹與該怎麼玩的攻略。</li>
+        <li>花費分頁可以先填 3 個人的名字，之後記帳、算誰該給誰錢都會自動用名字顯示。</li>
+        <li>回程 20:00 班次，班表請出發前於台灣高鐵 APP 確認。</li>
+      </ul>
+    </div>
+    <footer>台南三天兩夜行程規劃｜2026.10.24 製作</footer>
+  </section>
+
+  <!-- ================= 行程 ================= -->
+  <section class="page" id="page-itinerary">
+    <div class="seg" id="seg">
+      <button class="active" data-day="day1">Day 1<span class="seg-sub">10/25 六</span></button>
+      <button data-day="day2">Day 2<span class="seg-sub">10/26 日</span></button>
+      <button data-day="day3">Day 3<span class="seg-sub">10/27 一</span></button>
+    </div>
+
+    <!-- Day 1 -->
+    <div class="day-panel active" id="day1">
+      <div class="day-map">
+        <div>
+          <div class="dm-label">Day 1 候選地點分佈圖</div>
+          <div class="dm-sub">高鐵台南站・雅樂軒・億載金城・漁光島・河樂廣場・老街群</div>
+        </div>
+        <a class="map-btn" id="dist-day1" target="_blank" href="#">🗺️ 打開分佈圖</a>
+      </div>
+      <div class="day-card">
+        <div class="day-title">
+          <div class="day-chip d1"><span class="d">D1</span><span class="w">週六</span></div>
+          <div><h3>抵達・安平的自由時光</h3><div class="theme">下午抵達，傍晚海邊或老街二選一</div></div>
+        </div>
+        <ul class="timeline">
+          <li class="move">
+            <div class="t-time">13:43</div>
+            <div class="t-title"><label><input type="checkbox" class="pick li-check" data-day="day1" data-query="高鐵台南站" checked><span class="opt-check"></span></label>★ 高鐵桃園站出發</div>
+            <div class="t-note">🚄 約 1 小時 37 分，15:20 前後抵達高鐵台南站。<a class="map-link" target="_blank" href="https://www.google.com/maps/search/?api=1&query=高鐵桃園站">📍 桃園站</a>　<a class="map-link" target="_blank" href="https://www.google.com/maps/search/?api=1&query=高鐵台南站">📍 台南站</a></div>
+          </li>
+          <li class="move">
+            <div class="t-time">15:20～16:00</div>
+            <div class="t-title">★ 高鐵台南站 → 雅樂軒酒店</div>
+            <div class="t-note">🚕 計程車約 30 分鐘（$500～600）。帶行李建議直接叫車，不轉公車</div>
+          </li>
+          <li>
+            <div class="t-time">16:00</div>
+            <div class="t-title"><label><input type="checkbox" class="pick li-check" data-day="day1" data-query="台南安平雅樂軒酒店" checked><span class="opt-check"></span></label>★ Check-in 台南安平雅樂軒酒店</div>
+            <div class="t-note">📍 安平區光州路108號。放下行李出發！<a class="map-link" target="_blank" href="https://www.google.com/maps/search/?api=1&query=台南安平雅樂軒酒店">📍 地圖</a></div>
+          </li>
+          <li>
+            <div class="t-time">16:30～18:00｜傍晚選一個</div>
+            <div class="t-title">傍晚時光（3 選）</div>
+            <div class="opts">
+              <div class="opt">
+                <div class="opt-head"><label><input type="checkbox" class="pick" data-day="day1" data-query="億載金城"><span class="opt-check"></span></label><span class="opt-tag tag-out">室外</span><span class="opt-name">億載金城＋安平港濱公園</span><button class="story-btn" data-story="yijin">📖 景點故事</button><a class="map-link" target="_blank" href="https://www.google.com/maps/search/?api=1&query=億載金城">📍 地圖</a></div>
+                <div class="opt-desc">清代沈葆楨建的西式砲台，護城河綠地環繞超好拍。進城門看古砲、沿護城河步道繞一圈約 20 分，傍晚 5 點後夕陽染紅城牆最漂亮，免門票輕鬆走。</div>
+                <div class="opt-meta">
+                  <span>📍 安平區光州路3號</span><span>🚶 從飯店步行 3 分鐘</span><span>🎫 免門票</span><span>🕐 08:30-17:30（外圍隨時可逛）</span>
+                </div>
+              </div>
+              <div class="opt">
+                <div class="opt-head"><label><input type="checkbox" class="pick" data-day="day1" data-query="漁光島"><span class="opt-check"></span></label><span class="opt-tag tag-out">室外</span><span class="opt-tag tag-niche">小眾景點</span><span class="opt-name">漁光島月牙灣</span><button class="story-btn" data-story="yuguang">📖 景點故事</button><a class="map-link" target="_blank" href="https://www.google.com/maps/search/?api=1&query=漁光島">📍 地圖</a></div>
+                <div class="opt-desc">過漁光大橋就是獨立小島，先穿越海岸防風林秘境步道，出來就是月牙灣沙灘，有海邊鞦韆裝置藝術可以拍照。吹海風看夕陽，人比市區少很多。</div>
+                <div class="opt-meta">
+                  <span>📍 安平區漁光路</span><span>🚕 從飯店車程約 10 分鐘</span><span>🎫 免門票</span><span>🕐 全天開放，漲潮時沙灘變小</span>
+                </div>
+              </div>
+              <div class="opt">
+                <div class="opt-head"><label><input type="checkbox" class="pick" data-day="day1" data-query="河樂廣場"><span class="opt-check"></span></label><span class="opt-tag tag-out">室外</span><span class="opt-name">河樂廣場＋海安路藝術街</span><button class="story-btn" data-story="hele">📖 景點故事</button><a class="map-link" target="_blank" href="https://www.google.com/maps/search/?api=1&query=河樂廣場">📍 地圖</a></div>
+                <div class="opt-desc">中國城拆除後改建的下凹式親水廣場，水池免費戲水，傍晚打燈超美。旁邊海安路有街頭藝術牆和咖啡店，散步消化一下等晚餐。</div>
+                <div class="opt-meta">
+                  <span>📍 中西區中正路尾</span><span>🚕 從飯店車程約 15 分鐘</span><span>🎫 免門票</span><span>🕐 全天，水池區 09:00-21:00 前後</span>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="food">
+            <div class="t-time">18:00～19:30｜晚餐選一區</div>
+            <div class="t-title">晚餐（3 選，無牛肉＋素食標注）</div>
+            <div class="opts">
+              <div class="opt">
+                <div class="opt-head"><label><input type="checkbox" class="pick" data-day="day1" data-query="周氏蝦捲總店"><span class="opt-check"></span></label><span class="opt-tag tag-food">美食</span><span class="opt-name">安平老街三連吃</span><button class="story-btn" data-story="anpingstreet">📖 景點故事</button><a class="map-link" target="_blank" href="https://www.google.com/maps/search/?api=1&query=周氏蝦捲總店">📍 地圖</a></div>
+                <div class="opt-desc"><b>必點：周氏蝦捲的黃金蝦捲（甜辣醬＋蔥花）配魚丸湯</b>，再到陳記蚵捲吃現包現炸的蚵捲，最後用同記安平豆花收尾（推紅豆＋珍珠）。</div>
+                <div class="opt-meta">
+                  <span>📍 周氏：安平路408-1號｜陳記：安平路786巷21號｜同記：安平路433號</span><span>🚕 從飯店車程 5～8 分鐘</span><span>🕐 周氏 10:00-20:00</span>
+                </div>
+                <div class="opt-veg">🥬 素食夥伴：這區以葷食為主，豆花可同樂；正餐可就近去「合和蔬食料理」或「凱瑞美式蔬食廚房」（Google 搜店名，皆在安平區）</div>
+              </div>
+              <div class="opt">
+                <div class="opt-head"><label><input type="checkbox" class="pick" data-day="day1" data-query="水仙宮市場"><span class="opt-check"></span></label><span class="opt-tag tag-food">美食</span><span class="opt-name">神農街・水仙宮市場一帶</span><button class="story-btn" data-story="shennong">📖 景點故事</button><a class="map-link" target="_blank" href="https://www.google.com/maps/search/?api=1&query=水仙宮市場">📍 地圖</a></div>
+                <div class="opt-desc"><b>必點：阿財點心的海產粥和蝦捲</b>，水仙宮市場內的老攤，湯頭鮮甜料超多。附近還有蝦仁肉圓、清子割包可以分食，吃完直接逛神農街。</div>
+                <div class="opt-meta">
+                  <span>📍 中西區海安路、神農街口一帶</span><span>🚕 從飯店車程約 15 分鐘</span><span>🕐 阿財點心中午至晚間 7 點前後</span>
+                </div>
+                <div class="opt-veg">🥬 素食夥伴：隔壁條街新美街有「太郎拉麵」全素拉麵（豆乳湯頭），葷素分頭吃再會合逛神農街超順</div>
+              </div>
+              <div class="opt">
+                <div class="opt-head"><label><input type="checkbox" class="pick" data-day="day1" data-query="鴨母寮市場"><span class="opt-check"></span></label><span class="opt-tag tag-food">美食</span><span class="opt-tag tag-niche">小眾景點</span><span class="opt-name">鴨母寮市場周邊</span><button class="story-btn" data-story="yamuliao">📖 景點故事</button><a class="map-link" target="_blank" href="https://www.google.com/maps/search/?api=1&query=鴨母寮市場">📍 地圖</a></div>
+                <div class="opt-desc">百年傳統市場，<b>必點：炭火麵的木炭香乾麵</b>，再配洪芋頭擔仔麵（1885 年創始老店）的小碗擔仔麵，在地人的晚餐路線，觀光客少很多。</div>
+                <div class="opt-meta">
+                  <span>📍 北區自強街、成功路一帶</span><span>🚕 從飯店車程約 10 分鐘</span><span>🕐 洪芋頭 07:00-17:00，炭火麵下午開賣</span>
+                </div>
+                <div class="opt-veg">🥬 素食夥伴：市場內素食選擇少，建議這區跳過或改吃中西區「佛世緣素食」</div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="t-time">20:00～21:30｜夜間選一個</div>
+            <div class="t-title">夜間活動（3 選）</div>
+            <div class="opts">
+              <div class="opt">
+                <div class="opt-head"><label><input type="checkbox" class="pick" data-day="day1" data-query="安平運河"><span class="opt-check"></span></label><span class="opt-tag tag-out">室外</span><span class="opt-name">安平運河夜景散步</span><button class="story-btn" data-story="yunhe">📖 景點故事</button><a class="map-link" target="_blank" href="https://www.google.com/maps/search/?api=1&query=安平運河">📍 地圖</a></div>
+                <div class="opt-desc">安億橋到望月橋這段運河，晚上兩岸打燈，水面倒影很好拍。從老街吃完豆花散步回飯店剛好，全程約 20 分鐘。</div>
+                <div class="opt-meta">
+                  <span>📍 安平區安億路一帶</span><span>🚶 從安平老街步行 10 分鐘</span><span>🎫 免門票</span>
+                </div>
+              </div>
+              <div class="opt">
+                <div class="opt-head"><label><input type="checkbox" class="pick" data-day="day1" data-query="神農街"><span class="opt-check"></span></label><span class="opt-tag tag-in">室內</span><span class="opt-tag tag-niche">小眾景點</span><span class="opt-name">神農街夜遊＋老屋酒吧</span><button class="story-btn" data-story="shennong">📖 景點故事</button><a class="map-link" target="_blank" href="https://www.google.com/maps/search/?api=1&query=神農街">📍 地圖</a></div>
+                <div class="opt-desc">清代老屋街，晚上掛上燈籠氛圍滿分。小巷裡有手作皮革、陶藝、版畫小店，找一間老屋酒吧或咖啡店坐下來聊天，台南夜裡最舒服的走法。</div>
+                <div class="opt-meta">
+                  <span>📍 中西區神農街</span><span>🚕 從安平老街車程約 15 分鐘</span><span>🕐 小店多開到 21:00-22:00，酒吧更晚</span>
+                </div>
+              </div>
+              <div class="opt">
+                <div class="opt-head"><label><input type="checkbox" class="pick" data-day="day1"><span class="opt-check"></span></label><span class="opt-tag tag-in">室內</span><span class="opt-name">飯店頂樓 Sky Bar</span></div>
+                <div class="opt-desc">雅樂軒頂樓酒吧看安平夜景配調酒，第一天旅途累，早點休息養體力，明天要早起跑歸仁。</div>
+                <div class="opt-meta">
+                  <span>📍 飯店頂樓</span><span>🛗 電梯直達</span><span>🕐 開放至深夜</span>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div style="margin-top:14px;">
+        <button class="gen-btn" data-day="day1">🗺️ 勾選完成，生成 Day 1 行程地圖連結</button>
+        <div class="gen-result" id="result-day1"></div>
+      </div>
+    </div>
+
+    <!-- Day 2 -->
+    <div class="day-panel" id="day2">
+      <div class="day-map">
+        <div>
+          <div class="dm-label">Day 2 候選地點分佈圖</div>
+          <div class="dm-sub">萬國觀光工廠・市區古蹟群・十鼓・臺史博・夜市群</div>
+        </div>
+        <a class="map-btn" id="dist-day2" target="_blank" href="#">🗺️ 打開分佈圖</a>
+      </div>
+      <div class="day-card">
+        <div class="day-title">
+          <div class="day-chip d2"><span class="d">D2</span><span class="w">週日</span></div>
+          <div><h3>觀光工廠＋體驗日＋夜市</h3><div class="theme">上午固定萬國，下午與晚上自由選</div></div>
+        </div>
+        <ul class="timeline">
+          <li class="move">
+            <div class="t-time">09:00</div>
+            <div class="t-title">★ 飯店 → 萬國觀光工廠</div>
+            <div class="t-note">🚕 計程車約 45 分鐘（安平到歸仁最遠的一趟），建議 55688 預約叫車或包車半日</div>
+          </li>
+          <li class="pin">
+            <div class="t-time">10:00～12:00</div>
+            <div class="t-title"><label><input type="checkbox" class="pick li-check" data-day="day2" data-query="萬國通路創意觀光工廠" checked><span class="opt-check"></span></label>★ 萬國通路創意觀光工廠<button class="story-btn" data-story="wanguo">📖 景點故事</button><a class="map-link" target="_blank" href="https://www.google.com/maps/search/?api=1&query=萬國通路創意觀光工廠">📍 地圖</a></div>
+            <div class="opt-desc">行李箱品牌 Eminent 的全球營運總部，10 公頃園區免門票。<b>怎麼玩：先看品牌史展間，再看耐摔測試現場（行李箱從高處摔下的瞬間超療癒）</b>，可以玩 DIY 行李牌體驗，最後在賣場挖過季折扣品和短尾袋鼠周邊。</div>
+            <div class="opt-meta">
+              <span>📍 歸仁區中正南路二段1號 ☎ 06-700-7600</span><span>🎫 免門票（停車 $50 可折抵）</span><span>🕐 08:00-17:00，週四休（10/26 週日有開）</span>
+            </div>
+            <div class="opt-veg">🥬 素食夥伴：園區有簡餐咖啡但素食選擇有限，可自帶點心，午餐在市區補齊</div>
+          </li>
+          <li class="food">
+            <div class="t-time">12:00～13:45｜午餐選一個</div>
+            <div class="t-title">午餐（3 選，無牛肉＋素食標注）</div>
+            <div class="opts">
+              <div class="opt">
+                <div class="opt-head"><label><input type="checkbox" class="pick" data-day="day2" data-query="矮仔成蝦仁飯"><span class="opt-check"></span></label><span class="opt-tag tag-food">美食</span><span class="opt-name">矮仔成蝦仁飯 或 富盛號碗粿</span><a class="map-link" target="_blank" href="https://www.google.com/maps/search/?api=1&query=矮仔成蝦仁飯">📍 地圖</a></div>
+                <div class="opt-desc">回市區順路。<b>矮仔成必點：蝦仁飯＋鴨蛋湯</b>，火燒蝦脆甜、飯淋肉燥汁；<b>富盛號必點：肉燥碗粿</b>，內餡有蝦仁肉塊蛋黃，排隊名店值得等。</div>
+                <div class="opt-meta">
+                  <span>📍 矮仔成：海安路一段66號｜富盛號：西門路二段333巷8號</span><span>🚕 從萬國車程約 35～40 分鐘</span><span>🕐 矮仔成清晨開賣賣完為止</span>
+                </div>
+                <div class="opt-veg">🥬 素食夥伴：這兩家都是葷食小店，建議去中西區「佛世緣素食」（Google 搜店名），吃完會合</div>
+              </div>
+              <div class="opt">
+                <div class="opt-head"><label><input type="checkbox" class="pick" data-day="day2" data-query="藝奇ikki仁德文華"><span class="opt-check"></span></label><span class="opt-tag tag-food">美食</span><span class="opt-tag tag-in">室內</span><span class="opt-name">仁德藝奇 IKKI 新日式料理</span><a class="map-link" target="_blank" href="https://www.google.com/maps/search/?api=1&query=藝奇ikki仁德文華">📍 地圖</a></div>
+                <div class="opt-desc">奇美園區旁的日式餐廳，環境舒服適合多人分食，<b>海鮮、豬、雞品項多，全程無牛壓力小</b>。距離萬國車程 10 分鐘，吃完直接接下午行程。</div>
+                <div class="opt-meta">
+                  <span>📍 仁德區文華路二段11號</span><span>🚕 從萬國車程約 10 分鐘</span><span>🕐 11:00 開始營業，建議先訂位</span>
+                </div>
+                <div class="opt-veg">🥬 素食夥伴：可點野菜、豆腐、菇類等有限品項，事先跟店員說素食需求</div>
+              </div>
+              <div class="opt">
+                <div class="opt-head"><label><input type="checkbox" class="pick" data-day="day2" data-query="洪芋頭擔仔麵"><span class="opt-check"></span></label><span class="opt-tag tag-food">美食</span><span class="opt-name">洪芋頭擔仔麵</span><a class="map-link" target="_blank" href="https://www.google.com/maps/search/?api=1&query=洪芋頭擔仔麵">📍 地圖</a></div>
+                <div class="opt-desc">1885 年創始的擔仔麵老店，<b>必點：小碗擔仔麵配滷蛋＋蝦湯頭</b>，一人一碗剛好，想吃飽再加蒜泥白肉和燙青菜。</div>
+                <div class="opt-meta">
+                  <span>📍 中西區西門路二段272號</span><span>🚕 從萬國車程約 35 分鐘</span><span>🕐 07:00-17:00（傍晚前要到）</span>
+                </div>
+                <div class="opt-veg">🥬 素食夥伴：葷食店，建議同區改吃「佛世緣素食」</div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="t-time">14:00～17:30｜下午選一個</div>
+            <div class="t-title">下午行程（3 選）</div>
+            <div class="opts">
+              <div class="opt">
+                <div class="opt-head"><label><input type="checkbox" class="pick" data-day="day2" data-query="赤崁樓;林百貨"><span class="opt-check"></span></label><span class="opt-tag tag-out">室外</span><span class="opt-name">赤崁樓＋祀典武廟＋林百貨</span><button class="story-btn" data-story="chikan">📖 景點故事</button><a class="map-link" target="_blank" href="https://www.google.com/maps/search/?api=1&query=赤崁樓">📍 地圖</a></div>
+                <div class="opt-desc"><b>赤崁樓先看九座御贔屭御碑，傍晚點燈後最美</b>；旁邊武廟的月老很有名；最後走到林百貨搭 1932 年的老電梯上頂樓看市景，神社鳥居必拍，伴手禮樓層最好買。</div>
+                <div class="opt-meta">
+                  <span>📍 赤崁樓：民族路二段212號｜林百貨：忠義路二段63號</span><span>🚕 市區到赤崁樓約 8 分，赤崁樓→林百貨步行 8 分</span><span>🎫 赤崁樓 $50、林百貨免費</span><span>🕐 赤崁樓 08:30-21:30｜林百貨 11:00-21:00</span>
+                </div>
+              </div>
+              <div class="opt">
+                <div class="opt-head"><label><input type="checkbox" class="pick" data-day="day2" data-query="十鼓文創園區"><span class="opt-check"></span></label><span class="opt-tag tag-exp">特色體驗</span><span class="opt-tag tag-in">室內</span><span class="opt-name">十鼓文創園區</span><button class="story-btn" data-story="tendrum">📖 景點故事</button><a class="map-link" target="_blank" href="https://www.google.com/maps/search/?api=1&query=十鼓文創園區">📍 地圖</a></div>
+                <div class="opt-desc">百年糖廠改建的鼓樂藝術村，16 座舊倉庫超好拍。<b>常態鼓樂表演每日 11:00、15:00 兩場（夢糖劇場，開演前先排隊）</b>，下午選這裡就衝 15:00 場；其他時間玩煙囪滑索、高空攀爬等極限設施（含在門票內），門票約 $450 附餐飲折抵券。</div>
+                <div class="opt-meta">
+                  <span>📍 仁德區文華路二段326號</span><span>🚕 從市區車程約 20 分、從藝奇步行 5 分</span><span>🎫 門票約 $450</span><span>🕐 09:00-17:00，表演場次 11:00／15:00</span><span>☔ 雨天備案首選</span>
+                </div>
+                <div class="opt-warn">⚠️ 10/24-26 適逢「囪擊音樂祭」，10/26 常態入園可能受影響，想看常態表演建議改排 Day 3 展後（10/27 是常態日）</div>
+              </div>
+              <div class="opt">
+                <div class="opt-head"><label><input type="checkbox" class="pick" data-day="day2" data-query="臺灣歷史博物館"><span class="opt-check"></span></label><span class="opt-tag tag-in">室內</span><span class="opt-tag tag-niche">小眾景點</span><span class="opt-name">臺灣歷史博物館</span><button class="story-btn" data-story="nmth">📖 景點故事</button><a class="map-link" target="_blank" href="https://www.google.com/maps/search/?api=1&query=臺灣歷史博物館">📍 地圖</a></div>
+                <div class="opt-desc">台南最被低估的博物館，<b>互動展件多到可以玩 3 小時</b>：蒸汽火車頭體驗、兒童廳、時光車站，頂樓望樓還有台江內海意象光雕。輕鬆有料，天氣熱或下雨首選。</div>
+                <div class="opt-meta">
+                  <span>📍 安南區長和路一段250-1號</span><span>🚕 從市區車程約 20 分鐘</span><span>🎫 門票 $100</span><span>🕐 09:00-17:00（10/26 週日開放，週一休館）</span><span>☔ 雨天備案首選</span>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="t-time">17:30～19:00</div>
+            <div class="t-title">回飯店休息喘口氣</div>
+            <div class="t-note">🚕 從市區或仁德回安平約 20～30 分，養精蓄銳吃夜市</div>
+          </li>
+          <li class="food">
+            <div class="t-time">19:00～21:30｜晚間選一個</div>
+            <div class="t-title">晚餐＋夜間（3 選，無牛肉＋素食標注）</div>
+            <div class="opts">
+              <div class="opt">
+                <div class="opt-head"><label><input type="checkbox" class="pick" data-day="day2" data-query="花園夜市"><span class="opt-check"></span></label><span class="opt-tag tag-food">美食</span><span class="opt-name">花園夜市</span><button class="story-btn" data-story="huayuan">📖 景點故事</button><a class="map-link" target="_blank" href="https://www.google.com/maps/search/?api=1&query=花園夜市">📍 地圖</a></div>
+                <div class="opt-desc">全台最大流動夜市，週四六日營業。<b>無牛必吃：炸雞洋行炸雞、豆乳雞、蚵仔煎、香酥芋丸、地瓜球、木瓜牛奶</b>。攤位超多，分頭買再集合分食最有效率。</div>
+                <div class="opt-meta">
+                  <span>📍 北區海安路三段533號</span><span>🚕 從飯店車程約 15 分鐘</span><span>🕐 約 17:00-24:00，週四、六、日營業（10/26 有開）</span>
+                </div>
+                <div class="opt-veg">🥬 素食夥伴：夜市內有素食攤（素食臭豆腐、素滷味等），入口處多看招牌或問志工</div>
+              </div>
+              <div class="opt">
+                <div class="opt-head"><label><input type="checkbox" class="pick" data-day="day2" data-query="大東夜市"><span class="opt-check"></span></label><span class="opt-tag tag-food">美食</span><span class="opt-tag tag-niche">小眾景點</span><span class="opt-name">大東夜市</span><button class="story-btn" data-story="dadong">📖 景點故事</button><a class="map-link" target="_blank" href="https://www.google.com/maps/search/?api=1&query=大東夜市">📍 地圖</a></div>
+                <div class="opt-desc">在地人比較多的夜市，排隊比花園短，<b>烤肉、滷味（點無牛）、雞蛋糕、檸檬愛玉都好評</b>，格局方正好逛不會迷路。</div>
+                <div class="opt-meta">
+                  <span>📍 東區林森路一段275號</span><span>🚕 從飯店車程約 20 分鐘</span><span>🕐 約 17:30-24:00，週一、二、五、日營業（10/26 有開）</span>
+                </div>
+                <div class="opt-veg">🥬 素食夥伴：夜市內有素食攤，直接搜「大東夜市 素食」可找到攤位位置</div>
+              </div>
+              <div class="opt">
+                <div class="opt-head"><label><input type="checkbox" class="pick" data-day="day2" data-query="藍晒圖文創園區"><span class="opt-check"></span></label><span class="opt-tag tag-niche">小眾景點</span><span class="opt-tag tag-in">室內</span><span class="opt-name">文青夜遊：藍晒圖＋孔廟商圈</span><button class="story-btn" data-story="lantu">📖 景點故事</button><a class="map-link" target="_blank" href="https://www.google.com/maps/search/?api=1&query=藍晒圖文創園區">📍 地圖</a></div>
+                <div class="opt-desc">跳過夜市的路線：先拍藍晒圖文創園區的 3D 藍白圖牆（夜間打燈最上鏡），逛老屋文創小店，晚餐在孔廟商圈解決，最後散步回神農街收尾。</div>
+                <div class="opt-meta">
+                  <span>📍 藍晒圖：中西區西門路一段689巷</span><span>🚕 從飯店車程約 15 分鐘</span><span>🎫 免門票</span><span>🕐 園區小店多開到 21:00 前後</span>
+                </div>
+                <div class="opt-veg">🥬 素食夥伴：這區最友善！赤崁樓旁「赤崁璽樓蔬食」（西門路二段372巷10號，晚餐 17:30-21:00，10/26 週日營業），老宅用餐葷食夥伴也能一起</div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div style="margin-top:14px;">
+        <button class="gen-btn" data-day="day2">🗺️ 勾選完成，生成 Day 2 行程地圖連結</button>
+        <div class="gen-result" id="result-day2"></div>
+      </div>
+    </div>
+
+    <!-- Day 3 -->
+    <div class="day-panel" id="day3">
+      <div class="day-map">
+        <div>
+          <div class="dm-label">Day 3 候選地點分佈圖</div>
+          <div class="dm-sub">安平古堡群・四草・奇美博物館・高鐵台南站</div>
+        </div>
+        <a class="map-btn" id="dist-day3" target="_blank" href="#">🗺️ 打開分佈圖</a>
+      </div>
+      <div class="day-card">
+        <div class="day-title">
+          <div class="day-chip d3"><span class="d">D3</span><span class="w">週一</span></div>
+          <div><h3>安平 morning＋埃及展</h3><div class="theme">導覽 13:30 固定，上午與展後自由選</div></div>
+        </div>
+        <ul class="timeline">
+          <li>
+            <div class="t-time">09:00～11:00｜上午選一個</div>
+            <div class="t-title">上午行程（3 選）</div>
+            <div class="opts">
+              <div class="opt">
+                <div class="opt-head"><label><input type="checkbox" class="pick" data-day="day3" data-query="安平古堡;安平樹屋"><span class="opt-check"></span></label><span class="opt-tag tag-out">室外</span><span class="opt-name">安平古堡＋安平樹屋</span><button class="story-btn" data-story="anpingfort">📖 景點故事</button><a class="map-link" target="_blank" href="https://www.google.com/maps/search/?api=1&query=安平古堡">📍 地圖</a></div>
+                <div class="opt-desc"><b>古堡先上瞭望台看安平港全景，再到紅磚古牆拍照</b>；樹屋的榕樹氣根纏繞整棟老屋，走空中木棧道穿越樹冠是精華。兩點相距步行 5 分鐘，早上人少涼爽。</div>
+                <div class="opt-meta">
+                  <span>📍 古堡：國勝路82號｜樹屋：古堡街108號</span><span>🚶 從飯店步行約 10 分鐘</span><span>🎫 各 $50</span><span>🕐 08:30-17:30</span>
+                </div>
+              </div>
+              <div class="opt">
+                <div class="opt-head"><label><input type="checkbox" class="pick" data-day="day3" data-query="四草綠色隧道"><span class="opt-check"></span></label><span class="opt-tag tag-exp">特色體驗</span><span class="opt-tag tag-out">室外</span><span class="opt-name">四草綠色隧道竹筏</span><button class="story-btn" data-story="sicao">📖 景點故事</button><a class="map-link" target="_blank" href="https://www.google.com/maps/search/?api=1&query=四草綠色隧道">📍 地圖</a></div>
+                <div class="opt-desc">台版亞馬遜河！<b>坐竹筏穿紅樹林拱廊，看「天使之吻」與「綠色之眼」水面倒影</b>，導覽員講紅樹林生態很有趣。<b>務必買「綠色隧道竹筏航線」</b>（30 分鐘），不要買成台江觀光船。週一人少，09:00 前抵達很快上船。</div>
+                <div class="opt-meta">
+                  <span>📍 安南區大眾路360號（四草大眾廟旁碼頭）</span><span>🚕 從飯店車程約 15 分鐘</span><span>🎫 全票 $200，船程 30 分</span><span>🕐 約 08:30 起，滿 30 人或每 30 分鐘開船</span>
+                </div>
+              </div>
+              <div class="opt">
+                <div class="opt-head"><label><input type="checkbox" class="pick" data-day="day3" data-query="夕遊出張所"><span class="opt-check"></span></label><span class="opt-tag tag-niche">小眾景點</span><span class="opt-tag tag-out">室外</span><span class="opt-name">夕遊出張所＋運河步道</span><button class="story-btn" data-story="xianyou">📖 景點故事</button><a class="map-link" target="_blank" href="https://www.google.com/maps/search/?api=1&query=夕遊出張所">📍 地圖</a></div>
+                <div class="opt-desc">日治時期鹽務出張所改建，<b>必看：366 色生日彩鹽牆，找自己的生日色超好玩</b>，鹽山造景和白色庭院隨手拍都美，旁邊運河步道可以散步。</div>
+                <div class="opt-meta">
+                  <span>📍 安平區古堡街104巷22號</span><span>🚶 從飯店步行約 10 分鐘</span><span>🎫 免門票</span><span>🕐 10:00-18:00 前後</span>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="t-time">11:00～11:30</div>
+            <div class="t-title">★ 回飯店退房，行李上車</div>
+          </li>
+          <li class="food">
+            <div class="t-time">11:30～12:30｜午餐選一個</div>
+            <div class="t-title">午餐（3 選，無牛肉＋素食標注）</div>
+            <div class="opts">
+              <div class="opt">
+                <div class="opt-head"><label><input type="checkbox" class="pick" data-day="day3" data-query="安平老街"><span class="opt-check"></span></label><span class="opt-tag tag-food">美食</span><span class="opt-name">安平老街小吃當午餐</span><a class="map-link" target="_blank" href="https://www.google.com/maps/search/?api=1&query=安平老街">📍 地圖</a></div>
+                <div class="opt-desc"><b>必吃：蚵捲、蝦餅、魚鬆餅</b>，邊走邊吃不佔時間，趕 13:00 到奇美剛好。</div>
+                <div class="opt-meta">
+                  <span>📍 安平區延平街一帶</span><span>🚶 從飯店步行 10 分鐘</span>
+                </div>
+                <div class="opt-veg">🥬 素食夥伴：老街以葷食小吃為主，建議出發前先在安平區的「合和蔬食」或「凱瑞美式蔬食廚房」吃飽再會合</div>
+              </div>
+              <div class="opt">
+                <div class="opt-head"><label><input type="checkbox" class="pick" data-day="day3" data-query="藝奇ikki仁德文華"><span class="opt-check"></span></label><span class="opt-tag tag-food">美食</span><span class="opt-tag tag-in">室內</span><span class="opt-name">仁德藝奇 IKKI</span><a class="map-link" target="_blank" href="https://www.google.com/maps/search/?api=1&query=藝奇ikki仁德文華">📍 地圖</a></div>
+                <div class="opt-desc">往奇美方向順路，Day 2 沒吃可以在這補，冷氣房好好吃一頓再進博物館。</div>
+                <div class="opt-meta">
+                  <span>📍 仁德區文華路二段11號</span><span>🚕 從安平車程約 30 分鐘</span><span>🕐 11:00 開始營業</span>
+                </div>
+                <div class="opt-veg">🥬 素食夥伴：野菜、豆腐類有限品項，事先告知素食需求</div>
+              </div>
+              <div class="opt">
+                <div class="opt-head"><label><input type="checkbox" class="pick" data-day="day3" data-query="奇美博物館"><span class="opt-check"></span></label><span class="opt-tag tag-food">美食</span><span class="opt-tag tag-in">室內</span><span class="opt-name">奇美園區咖啡輕食</span><a class="map-link" target="_blank" href="https://www.google.com/maps/search/?api=1&query=奇美博物館">📍 地圖</a></div>
+                <div class="opt-desc">博物館園區內有咖啡廳輕食，早到先吃飯再看導覽最省事，選擇較有限但不用再跑一趟。</div>
+                <div class="opt-meta">
+                  <span>📍 奇美博物館園區內</span><span>🚕 從安平車程約 30 分鐘</span>
+                </div>
+                <div class="opt-veg">🥬 素食夥伴：蔬食三明治、沙拉等簡單選擇</div>
+              </div>
+            </div>
+          </li>
+          <li class="pin">
+            <div class="t-time">13:30～14:30</div>
+            <div class="t-title"><label><input type="checkbox" class="pick li-check" data-day="day3" data-query="奇美博物館" checked><span class="opt-check"></span></label>★ 奇美博物館《埃及之王：法老》導覽<button class="story-btn" data-story="chimei">📖 景點故事</button><a class="map-link" target="_blank" href="https://www.google.com/maps/search/?api=1&query=奇美博物館">📍 地圖</a></div>
+            <div class="opt-desc">與大英博物館合作的特展，法老文物與木乃伊棺槨一次看。<b>場次：已排定 13:30-14:30 專人導覽</b>，憑票入場，13:00 前抵達取票。</div>
+            <div class="opt-warn">⚠️ 導覽 13:30 準時開始，建議 12:45 前吃完午餐、13:00 前抵達取票進場，遲到無法中途加入</div>
+            <div class="opt-meta">
+              <span>📍 仁德區文華路二段66號</span><span>🚕 從安平車程約 30 分</span><span>🎫 常設展 $200＋特展票另計</span><span>🕐 09:30-17:30（週三休，週一有開）</span>
+            </div>
+          </li>
+          <li>
+            <div class="t-time">14:30～16:30｜展後選一個</div>
+            <div class="t-title">導覽結束後（3 選）</div>
+            <div class="opts">
+              <div class="opt">
+                <div class="opt-head"><label><input type="checkbox" class="pick" data-day="day3" data-query="奇美博物館"><span class="opt-check"></span></label><span class="opt-tag tag-in">室內</span><span class="opt-name">奇美常設展自由參觀</span><button class="story-btn" data-story="chimei">📖 景點故事</button><a class="map-link" target="_blank" href="https://www.google.com/maps/search/?api=1&query=奇美博物館">📍 地圖</a></div>
+                <div class="opt-desc"><b>必看：動物廳標本陣仗超震撼、兵器廳是世界級收藏、小提琴廳有名琴展示</b>，雕塑大道一路走到底，出口就是紀念品店，埃及展周邊也在這買。</div>
+                <div class="opt-meta">
+                  <span>📍 同上</span><span>🎫 含在常設展門票內</span><span>🕐 至 17:30</span><span>☔ 雨天備案首選</span>
+                </div>
+              </div>
+              <div class="opt">
+                <div class="opt-head"><label><input type="checkbox" class="pick" data-day="day3" data-query="台南都會公園"><span class="opt-check"></span></label><span class="opt-tag tag-out">室外</span><span class="opt-name">都會公園＋阿波羅噴泉</span><button class="story-btn" data-story="park">📖 景點故事</button><a class="map-link" target="_blank" href="https://www.google.com/maps/search/?api=1&query=台南都會公園">📍 地圖</a></div>
+                <div class="opt-desc">博物館正前方的大草皮公園，<b>阿波羅噴泉和奧林帕斯橋是台南代表性拍照點</b>，光線好的時候水面倒影非常出片。</div>
+                <div class="opt-meta">
+                  <span>📍 仁德區文華路二段62號</span><span>🚶 博物館門口即達</span><span>🎫 免門票</span>
+                </div>
+              </div>
+              <div class="opt">
+                <div class="opt-head"><label><input type="checkbox" class="pick" data-day="day3" data-query="十鼓文創園區"><span class="opt-check"></span></label><span class="opt-tag tag-exp">特色體驗</span><span class="opt-tag tag-in">室內</span><span class="opt-name">十鼓文創園區（看 15:00 場）</span><button class="story-btn" data-story="tendrum">📖 景點故事</button><a class="map-link" target="_blank" href="https://www.google.com/maps/search/?api=1&query=十鼓文創園區">📍 地圖</a></div>
+                <div class="opt-desc">10/27 是常態日沒有音樂祭。<b>鼓樂表演場次 11:00／15:00，要趕 15:00 場就要 14:30 前離開博物館（步行 5 分可到，時間緊但可行）</b>；不看表演也可以純逛糖廠倉庫群。看完 16:30 出發往高鐵站，時間剛好。</div>
+                <div class="opt-meta">
+                  <span>📍 仁德區文華路二段326號</span><span>🚶 從奇美步行約 5 分鐘</span><span>🎫 門票約 $450</span><span>🕐 09:00-17:00，表演 11:00／15:00</span>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="move">
+            <div class="t-time">17:00</div>
+            <div class="t-title"><label><input type="checkbox" class="pick li-check" data-day="day3" data-query="高鐵台南站" checked><span class="opt-check"></span></label>★ 出發往高鐵台南站</div>
+            <div class="t-note">🚕 車程約 20 分鐘（仁德→歸仁順路，非常充裕）</div>
+          </li>
+          <li class="food">
+            <div class="t-time">17:30～19:30</div>
+            <div class="t-title">高鐵站晚餐＋候車</div>
+            <div class="t-note">高鐵台南站有美食街（麵店、便當、咖啡都有），慢慢吃不用趕</div>
+            <div class="opt-veg">🥬 素食夥伴：車站美食街有素食便當與麵食選擇</div>
+          </li>
+          <li class="move">
+            <div class="t-time">約 20:00</div>
+            <div class="t-title">★ 高鐵北上回桃園</div>
+            <div class="t-note">🚄 約 1 小時 40 分，21:40 前後抵達桃園。班次請出發前以台灣高鐵 APP 為準</div>
+          </li>
+        </ul>
+      </div>
+      <div style="margin-top:14px;">
+        <button class="gen-btn" data-day="day3">🗺️ 勾選完成，生成 Day 3 行程地圖連結</button>
+        <div class="gen-result" id="result-day3"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 花費 ================= -->
+  <section class="page" id="page-budget">
+    <h2>旅行花費記錄與分帳</h2>
+    <div class="member-setup">
+      <div class="label">① 先填 3 個人的名字（之後記帳與結算都會用名字顯示）</div>
+      <div class="member-row" id="memberInputs"></div>
+    </div>
+
+    <h2>② 花費記錄</h2>
+    <div id="expenseList"></div>
+    <button class="add-btn" id="addExpense">＋ 新增一筆花費</button>
+    <div class="hint">每筆填：項目、金額、誰先付錢、哪些人要分攤（3 人吃飯通常是全勾；個人購物就只勾自己）。資料會自動存在這台裝置的瀏覽器，重整不會消失。</div>
+
+    <h2>③ 結算：誰該給誰多少錢</h2>
+    <div class="settle-card">
+      <div class="settle-grid" id="settleGrid"></div>
+      <div class="transfers" id="transferList"></div>
+      <div class="hint" id="settleHint"></div>
+    </div>
+    <div class="saved-tip">💾 資料已自動儲存在本機瀏覽器</div>
+  </section>
+
+</div>
+
+<!-- ================= tab bar ================= -->
+<nav class="tabbar">
+  <div class="tabbar-inner">
+    <button class="tab active" data-page="page-home">
+      <span class="icon">🏠</span><span class="tab-label">總覽</span>
+    </button>
+    <button class="tab" data-page="page-itinerary">
+      <span class="icon">📅</span><span class="tab-label">行程</span>
+    </button>
+    <button class="tab" data-page="page-budget">
+      <span class="icon">💸</span><span class="tab-label">花費</span>
+    </button>
+  </div>
+</nav>
+
+<!-- ================= story modal ================= -->
+<div class="story-modal" id="storyModal">
+  <div class="story-box">
+    <button class="story-close" id="storyClose">✕</button>
+    <div id="storyBody"></div>
+  </div>
+</div>
+
+<script>
+  /* ---------- tabs & days ---------- */
+  const tabs = document.querySelectorAll('.tab');
+  const pages = document.querySelectorAll('.page');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      pages.forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById(tab.dataset.page).classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
+  const segBtns = document.querySelectorAll('#seg button');
+  const dayPanels = document.querySelectorAll('.day-panel');
+  segBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      segBtns.forEach(b => b.classList.remove('active'));
+      dayPanels.forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.day).classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
+
+  /* ---------- map route generation ---------- */
+  function buildMapUrl(queries) {
+    if (!queries.length) return null;
+    const enc = q => encodeURIComponent(q);
+    const origin = enc(queries[0]);
+    const dest = enc(queries[queries.length - 1]);
+    const mids = queries.slice(1, -1);
+    let url = "https://www.google.com/maps/dir/?api=1&origin=" + origin + "&destination=" + dest + "&travelmode=driving";
+    if (mids.length) url += "&waypoints=" + mids.map(enc).join("|");
+    return url;
+  }
+  function dayQueries(dayId) {
+    return [...document.querySelectorAll('input.pick[data-day="' + dayId + '"]')]
+      .filter(cb => cb.dataset.query && cb.dataset.query.trim())
+      .map(cb => cb.dataset.query);
+  }
+  ["day1", "day2", "day3"].forEach(dayId => {
+    const seen = new Set();
+    const all = [];
+    dayQueries(dayId).forEach(q => {
+      q.split(";").map(s => s.trim()).filter(Boolean).forEach(item => {
+        if (!seen.has(item)) { seen.add(item); all.push(item); }
+      });
+    });
+    const url = buildMapUrl(all);
+    const link = document.getElementById("dist-" + dayId);
+    if (link && url) link.href = url;
+  });
+  document.querySelectorAll(".gen-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const dayId = btn.dataset.day;
+      const checked = [...document.querySelectorAll('input.pick[data-day="' + dayId + '"]:checked')]
+        .filter(cb => cb.dataset.query && cb.dataset.query.trim());
+      const result = document.getElementById("result-" + dayId);
+      if (!checked.length) {
+        result.textContent = "還沒有勾選任何有地點的行程，先勾幾個吧！";
+        result.classList.add("show");
+        return;
+      }
+      const qs = [];
+      checked.forEach(cb => cb.dataset.query.split(";").map(s => s.trim()).filter(Boolean).forEach(q => {
+        if (!qs.includes(q)) qs.push(q);
+      }));
+      const url = buildMapUrl(qs);
+      result.innerHTML =
+        "已依勾選順序生成 " + qs.length + " 個點的一日行程：<br>" +
+        '<a target="_blank" href="' + url + '">點這裡打開 Google Maps 行程</a><br>' +
+        '<button class="map-btn" style="margin-top:8px;" id="copy-' + dayId + '">📋 複製連結傳給朋友</button>' +
+        '<div class="copy-tip">或長按上方連結複製</div>';
+      result.classList.add("show");
+      document.getElementById("copy-" + dayId).addEventListener("click", function () {
+        navigator.clipboard.writeText(url).then(() => {
+          this.textContent = "✅ 已複製！";
+        }).catch(() => {
+          this.textContent = "請長按連結手動複製";
+        });
+      });
+      result.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    });
+  });
+
+  /* ---------- weather ---------- */
+  const W_CODES = {
+    0: ["晴朗", "☀️"], 1: ["大致晴朗", "🌤️"], 2: ["局部多雲", "⛅"], 3: ["陰天", "☁️"],
+    45: ["霧", "🌫️"], 48: ["霧凇", "🌫️"],
+    51: ["毛毛雨", "🌦️"], 53: ["毛毛雨", "🌦️"], 55: ["毛毛雨", "🌦️"],
+    56: ["凍毛雨", "🌧️"], 57: ["凍毛雨", "🌧️"],
+    61: ["小雨", "🌧️"], 63: ["下雨", "🌧️"], 65: ["大雨", "🌧️"],
+    66: ["凍雨", "🌧️"], 67: ["凍雨", "🌧️"],
+    71: ["小雪", "🌨️"], 73: ["下雪", "🌨️"], 75: ["大雪", "❄️"], 77: ["雪粒", "🌨️"],
+    80: ["小陣雨", "🌦️"], 81: ["陣雨", "🌦️"], 82: ["大陣雨", "⛈️"],
+    85: ["陣雪", "🌨️"], 86: ["陣雪", "🌨️"],
+    95: ["雷雨", "⛈️"], 96: ["雷雨伴冰雹", "⛈️"], 99: ["雷雨伴冰雹", "⛈️"]
+  };
+  const wCode = c => W_CODES[c] || ["未知", "❓"];
+  const WD_ZH = ["日", "一", "二", "三", "四", "五", "六"];
+
+  async function loadWeather() {
+    const el = id => document.getElementById(id);
+    try {
+      const url = "https://api.open-meteo.com/v1/forecast?latitude=23.0&longitude=120.16" +
+        "&current=temperature_2m,apparent_temperature,weather_code,precipitation_probability,relative_humidity_2m,wind_speed_10m" +
+        "&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max" +
+        "&timezone=Asia%2FTaipei&forecast_days=7";
+      const d = await (await fetch(url)).json();
+      const c = d.current;
+      const [desc, icon] = wCode(c.weather_code);
+      el("w-icon").textContent = icon;
+      el("w-temp").textContent = Math.round(c.temperature_2m) + "°C";
+      el("w-desc").textContent = "台南・" + desc;
+      el("w-feel").textContent = Math.round(c.apparent_temperature) + "°C";
+      el("w-rain").textContent = (c.precipitation_probability ?? "--") + "%";
+      el("w-hum").textContent = (c.relative_humidity_2m ?? "--") + "%";
+      el("w-wind").textContent = Math.round(c.wind_speed_10m) + " km/h";
+
+      const dayTags = { "2026-10-25": "Day 1", "2026-10-26": "Day 2", "2026-10-27": "Day 3" };
+      let html = "";
+      d.daily.time.forEach((t, i) => {
+        if (!dayTags[t]) return;
+        const dt = new Date(t + "T12:00:00");
+        const mm = String(dt.getMonth() + 1).padStart(2, "0");
+        const dd = String(dt.getDate()).padStart(2, "0");
+        const [ddesc, dicon] = wCode(d.daily.weather_code[i]);
+        html += '<div class="w-day">' +
+          '<div class="d-date">' + mm + "/" + dd + "（" + WD_ZH[dt.getDay()] + "）</div>" +
+          '<div class="d-tag">' + dayTags[t] + "</div>" +
+          '<div class="d-icon" title="' + ddesc + '">' + dicon + "</div>" +
+          '<div class="d-temp">' + Math.round(d.daily.temperature_2m_min[i]) + "° / " + Math.round(d.daily.temperature_2m_max[i]) + "°</div>" +
+          '<div class="d-rain">🌧️ ' + d.daily.precipitation_probability_max[i] + "%</div>" +
+        "</div>";
+      });
+      el("w-days").innerHTML = html || '<div class="w-error">預報日期超出範圍</div>';
+      el("w-src").textContent = "資料來源：Open-Meteo｜更新時間 " +
+        new Date().toLocaleTimeString("zh-TW", { hour: "2-digit", minute: "2-digit" });
+    } catch (err) {
+      el("w-icon").textContent = "📡";
+      el("w-temp").textContent = "--";
+      el("w-desc").innerHTML = '<span class="w-error">無法取得天氣，請確認網路連線後點下方更新</span>';
+    }
+  }
+  document.getElementById("w-refresh").addEventListener("click", loadWeather);
+  loadWeather();
+
+  /* ---------- story modal ---------- */
+  const STORIES = {
+    yijin: { title: "億載金城", wiki: "億載金城",
+      body: `<ul>
+        <li><b>怎麼玩：</b>跨過護城河小橋走進城門，正中央是復刻的阿姆斯壯大砲，沿城牆步道繞一圈約 20 分鐘。傍晚 5 點後夕陽把紅色磚牆染成金黃色，是全天最美的時段。</li>
+        <li><b>拍照點：</b>城門正面、護城河倒影、城牆上遠眺安平港。</li>
+        <li><b>歷史一句：</b>1874 年牡丹社事件後，沈葆楨來台籌防，奏請建造這座西式砲台，門額「億載金城」四字出自光緒帝御筆。</li>
+        <li><b>小提醒：</b>外圍港濱公園隨時可逛，進城牆才要門票 $50；跟安平古堡不一樣的地方是這裡更空曠，適合放風箏、追夕陽。</li>
+      </ul>` },
+    yuguang: { title: "漁光島月牙灣", wiki: "漁光島",
+      body: `<ul>
+        <li><b>怎麼玩：</b>過漁光大橋後穿越防風林步道，眼前豁然開朗就是月牙灣。沿沙灘往南走人更少，是看夕陽的第一排。</li>
+        <li><b>拍照點：</b>沙灘鞦韆裝置藝術、防風林剪影、夕陽下的人工港堤。</li>
+        <li><b>特色：</b>2017 年起舉辦過漁光島藝術節，島上不定期有藝術裝置。台南人自己的秘境海灘，觀光客比安平老街少非常多。</li>
+        <li><b>小提醒：</b>漲潮時沙灘會變窄，出發前看一下潮汐；島上商店少，水先買好。</li>
+      </ul>` },
+    hele: { title: "河樂廣場", wiki: "河樂廣場",
+      body: `<ul>
+        <li><b>怎麼玩：</b>脫鞋下去水池邊走走（水很淺可以踩），繞一圈欣賞保留的中國城遺構廊柱，傍晚打燈後倒影超美。</li>
+        <li><b>拍照點：</b>下凹水池的鏡面倒影、廊柱框架構圖。</li>
+        <li><b>特色：</b>2020 年開放，由舊中國城商場拆除改建，曾獲英國景觀建築獎。台南市区最新潮的免費景點。</li>
+        <li><b>小提醒：</b>玩水帶條小毛巾；水池區約 09:00-21:00 開放。</li>
+      </ul>` },
+    anpingstreet: { title: "安平老街", wiki: "安平老街",
+      body: `<ul>
+        <li><b>怎麼玩：</b>延平街是荷治時期開闢、台灣第一條正式命名的街道，邊走邊吃是唯一正解：蝦捲、蚵捲、蝦餅、魚鬆餅一路吃過去，巷子裡找找牆上的劍獅。</li>
+        <li><b>必買：</b>蝦餅（現炸最香）、蜜餞、劍獅小物。</li>
+        <li><b>歷史一句：</b>400 年前這裡是熱蘭遮城旁的商業街，安平曾是全台第一大港。</li>
+        <li><b>素食夥伴：</b>同記安平豆花可以一起吃；正餐葷素分頭，素食去「合和蔬食」或「凱瑞美式蔬食廚房」。</li>
+      </ul>` },
+    shennong: { title: "神農街與五條港", wiki: "神農街",
+      body: `<ul>
+        <li><b>怎麼玩：</b>這條清代老街屋齡動輒上百年，白天是手作皮革、陶藝、版畫小店，晚上掛上紅燈籠變成台南最有氛圍的一條街。找一間老屋酒吧或咖啡店坐下來，慢慢聊。</li>
+        <li><b>拍照點：</b>紅燈籠巷弄、老木門、窗台貓咪。</li>
+        <li><b>歷史一句：</b>神農街曾是五條港河道邊的商用街，貨物從港口直接送到家門口。</li>
+        <li><b>素食夥伴：</b>隔壁條街新美街有「太郎拉麵」全素拉麵（豆乳湯頭），葷素分頭吃再會合超順。</li>
+      </ul>` },
+    yamuliao: { title: "鴨母寮市場", wiki: "鴨母寮市場",
+      body: `<ul>
+        <li><b>怎麼玩：</b>百年傳統市場，炭火麵用木炭煮麵有一股特別的香氣，配一碗洪芋頭擔仔麵（1885 年創始）。市場裡的蔬果攤、古早味雜貨也很好逛。</li>
+        <li><b>必點：</b>炭火香乾麵、擔仔麵、市場內的傳統甜點。</li>
+        <li><b>特色：</b>在地人的廚房，觀光客少，體驗最道地的台南日常。</li>
+        <li><b>素食夥伴：</b>市場內素食選擇少，建議改吃中西區「佛世緣素食」。</li>
+      </ul>` },
+    wanguo: { title: "萬國通路創意觀光工廠", wiki: "萬國通路",
+      body: `<ul>
+        <li><b>怎麼玩：</b>先看品牌故事館認識 Eminent 的崛起，再到耐摔測試區看行李箱從高處摔下（超療癒），DIY 行李牌體驗可以做一個帶走，最後去賣場挖過季折扣品，價格常常只有專櫃對折以下。</li>
+        <li><b>必買：</b>短尾袋鼠周邊（可愛到失心瘋）、過季行李箱、旅行配件。</li>
+        <li><b>歷史一句：</b>萬國通路 1979 年創立於台南，是行李箱界的台灣之光，營運總部與工廠就在歸仁這片 10 公頃綠能園區。</li>
+        <li><b>小提醒：</b>免門票、免停車費（$50 可折抵），08:00-17:00，週四休館。</li>
+      </ul>` },
+    chikan: { title: "赤崁樓・武廟・林百貨", wiki: "赤崁樓",
+      body: `<ul>
+        <li><b>赤崁樓：</b>1653 年荷蘭人建的普羅民遮城遺址。必看海神廟與文昌閣之間的九座御贔屭碑，乾隆御製石碑由巨龜背負，全台僅此一處。傍晚點燈後最漂亮。</li>
+        <li><b>祀典武廟：</b>赤崁樓旁步行 3 分鐘，台灣唯一官建武廟，月老非常靈驗，可以拜一下求緣分。</li>
+        <li><b>林百貨：</b>1932 年開幕的百年百貨，搭復刻老電梯上頂樓看市景，屋頂還留有神社鳥居。伴手禮樓層是台南最好買的一層（11:00-21:00）。</li>
+        <li><b>素食夥伴：</b>赤崁樓旁巷內「赤崁璽樓蔬食」是台南蔬食名店，老宅用餐。</li>
+      </ul>` },
+    tendrum: { title: "十鼓文創園區", wiki: "十鼓文創園區",
+      body: `<ul>
+        <li><b>怎麼玩：</b>百年仁德糖廠改建，16 座日治倉庫群超好拍。先確認夢糖劇場場次（常態每日 11:00、15:00 兩場，開演前先排隊），其他時間玩煙囪滑索、五層樓高空攀爬、蜜糖罐歷險（都含在門票內，怕高的逛倉庫也很精彩）。</li>
+        <li><b>必看：</b>夢糖劇場鼓樂表演，百年壓榨機廠房改建的劇場，鼓聲在工業遺構裡震到胸腔。</li>
+        <li><b>歷史一句：</b>1910 年建的車路墘糖廠，2005 年由十鼓擊樂團進駐重生，亞洲第一座鼓樂主題藝術村。</li>
+        <li><b>小提醒：</b>門票約 $450 含表演與設施，附餐飲折抵券；門票與場次以官網公告為準。</li>
+      </ul>` },
+    nmth: { title: "臺灣歷史博物館", wiki: "國立臺灣歷史博物館",
+      body: `<ul>
+        <li><b>怎麼玩：</b>常設展用互動展件講台灣四百年，坐進時光車站看老片、兒童廳玩童趣台灣、頂樓望樓看人工湖與光雕秀。慢慢逛可以待 3 小時。</li>
+        <li><b>必看：</b>兒童廳（大人也覺得有趣）、原住民與移民故事展區、望樓夕陽。</li>
+        <li><b>特色：</b>2011 年開館的國家級博物館，座落在古台江內海故地，建築本身就是「渡海」意象。</li>
+        <li><b>小提醒：</b>門票 $100，週一休館（10/26 週日正常開放）；館內有餐廳與哺乳室，行動不便者全程無障礙。</li>
+      </ul>` },
+    huayuan: { title: "花園夜市", wiki: "花園夜市",
+      body: `<ul>
+        <li><b>怎麼玩：</b>全台最大流動夜市，400+ 攤。建議先整圈繞完再回頭買，不然胃會提早爆掉。人多吃法：分頭排隊、中央會合、全部分食。</li>
+        <li><b>無牛必吃：</b>炸雞洋行炸雞、豆乳雞、蚵仔煎、香酥芋丸、地瓜球、拔絲地瓜、木瓜牛奶。</li>
+        <li><b>素食夥伴：</b>夜市內有素食攤（素食臭豆腐、素滷味），入口看招牌或問攤商。</li>
+        <li><b>小提醒：</b>週四、六、日營業，約 17:00-24:00；人多注意隨身物，現金備妥。</li>
+      </ul>` },
+    dadong: { title: "大東夜市", wiki: "大東夜市",
+      body: `<ul>
+        <li><b>怎麼玩：</b>在地人比較多的夜市，排隊比花園短，格局方正好逛不迷路。烤肉、滷味、雞蛋糕、檸檬愛玉都是人氣攤。</li>
+        <li><b>點單提醒：</b>滷味點豆皮、鴨血、青菜等無牛品項；烤肉避開牛舌牛排。</li>
+        <li><b>素食夥伴：</b>夜市內有素食攤，Google 搜「大東夜市 素食」有攤位攻略。</li>
+        <li><b>小提醒：</b>週一、二、五、日營業，約 17:30-24:00（10/26 週日有開）。</li>
+      </ul>` },
+    lantu: { title: "藍晒圖文創園區", wiki: "藍晒圖文創園區",
+      body: `<ul>
+        <li><b>怎麼玩：</b>入口的 3D 藍白圖牆是必拍地標（夜間打燈最上鏡），園區內是老屋改造的文創小店、手作攤與咖啡店，慢慢逛一間間挖寶。</li>
+        <li><b>拍照點：</b>藍晒圖牆前的人可以「走進圖裡」的錯位構圖。</li>
+        <li><b>歷史一句：</b>藍晒圖壁畫源自 2004 年海安路藝術街，2015 年在新園區以 3D 版重生，變成台南的城市意象。</li>
+        <li><b>素食夥伴：</b>這區最友善，孔廟商圈的「赤崁璽樓蔬食」晚餐 17:30-21:00。</li>
+      </ul>` },
+    anpingfort: { title: "安平古堡與樹屋", wiki: "安平古堡",
+      body: `<ul>
+        <li><b>安平古堡：</b>1624 年荷蘭人建的熱蘭遮城，台灣第一座西式城堡。上瞭望台看安平港全景，紅磚古牆是必拍點。門票 $50。</li>
+        <li><b>安平樹屋：</b>古堡步行 5 分鐘，德記洋行後方的舊倉庫被榕樹氣根纏繞半世紀，空中木棧道穿進樹冠，光影灑下來超美。門票 $50。</li>
+        <li><b>怎麼玩：</b>早上 9 點先到古堡（人少涼爽），再走到樹屋，10:30 前結束剛好回飯店退房。</li>
+        <li><b>歷史一句：</b>1662 年鄭成功在此接收荷蘭人，「安平」之名從此成為台灣與世界相遇的地標。</li>
+      </ul>` },
+    sicao: { title: "四草綠色隧道", wiki: "四草綠色隧道",
+      body: `<ul>
+        <li><b>怎麼玩：</b>在大眾廟旁碼頭買「綠色隧道竹筏航線」（$200，30 分鐘），坐無頂竹筏穿進紅樹林拱廊，水面倒影形成「天使之吻」與「綠色之眼」。導覽員一路講生態故事很有趣。</li>
+        <li><b>必看：</b>紅樹林水道拱廊、招潮蟹與彈塗魚、白鷺鷥群。</li>
+        <li><b>買票提醒：</b>不要買成台江觀光船（100 分鐘，不走隧道拱廊）；線上平台購票較便宜。</li>
+        <li><b>小提醒：</b>滿 30 人或每 30 分鐘開船，週一上午人少上船快，08:30 開始營運。</li>
+      </ul>` },
+    xianyou: { title: "夕遊出張所", wiki: "夕遊出張所",
+      body: `<ul>
+        <li><b>怎麼玩：</b>日治時期鹽務出張所改建的白色庭院，一樓的 366 色生日彩鹽牆是招牌，找出自己和朋友的生日色互贈超好玩。庭院鹽山、白色長廊隨手拍都美。</li>
+        <li><b>必買：</b>生日彩鹽小罐、鹽味咖啡、鹽滷豆花。</li>
+        <li><b>名字由來：</b>「夕遊」取自這裡的夕陽＋日語鹽（しお shio）的諧音。</li>
+        <li><b>小提醒：</b>免門票，約 10:00-18:00 開放；旁邊運河步道可以一起散步。</li>
+      </ul>` },
+    chimei: { title: "奇美博物館", wiki: "奇美實業",
+      body: `<ul>
+        <li><b>導覽場次：</b>已排定 13:30-14:30 埃及特展專人導覽，13:00 前務必抵達取票進場。</li>
+        <li><b>常設展必看：</b>動物廳標本大軍、兵器廳（世界級收藏）、小提琴名琴廳、雕塑大道。常設展 $200，特展另購。</li>
+        <li><b>怎麼玩：</b>希臘式建築本體先拍一輪，導覽後再進常設展，最後紀念品店買埃及展周邊。</li>
+        <li><b>歷史一句：</b>許文龍 1992 年創辦，「 Let everyone come here to see 」的初衷，2015 年落成現址，是全球私人博物館的台灣奇蹟。</li>
+        <li><b>小提醒：</b>09:30-17:30，週三休館；園區很大，穿好走的鞋。</li>
+      </ul>` },
+    park: { title: "台南都會公園", wiki: "台南都會公園",
+      body: `<ul>
+        <li><b>怎麼玩：</b>奇美博物館正前方的大草皮公園，阿波羅噴泉與奧林帕斯橋是最經典的兩個拍照點，導覽完出來散步剛好。</li>
+        <li><b>拍照點：</b>奧林帕斯橋上以博物館為背景、噴泉倒影。</li>
+        <li><b>特色：</b>台南最大的都會公園之一，佔地 66 公頃，博物館就蓋在公園正中央。</li>
+        <li><b>小提醒：</b>戶外無遮蔭，記得防曬與補水。</li>
+      </ul>` },
+    yunhe: { title: "安平運河", wiki: "安平運河",
+      body: `<ul>
+        <li><b>怎麼玩：</b>安億橋到望月橋之間的河段晚上有燈光，兩岸倒影與遊船燈火很好拍，從安平老街散步回飯店剛好經過。</li>
+        <li><b>拍照點：</b>橋上夜景、河面遊船燈光軌跡。</li>
+        <li><b>歷史一句：</b>1922 年開鑿的運河曾是台南對外貿易動脈，現在是安平的夜景擔當。</li>
+        <li><b>小提醒：</b>晚上有風記得帶薄外套。</li>
+      </ul>` }
+  };
+
+  const modal = document.getElementById("storyModal");
+  const storyBody = document.getElementById("storyBody");
+
+  async function openStory(key) {
+    const s = STORIES[key];
+    if (!s) return;
+    modal.classList.add("show");
+    storyBody.innerHTML =
+      '<div class="story-title">' + s.title + "</div>" +
+      '<div class="story-sub">景點故事｜整理自旅遊資訊與維基百科</div>' +
+      '<div class="story-photo-holder">⏳ 照片載入中…</div>' +
+      '<div class="story-sec"><h4>旅遊筆記</h4>' + s.body + "</div>" +
+      '<div id="wikiBlock"></div>';
+    modal.scrollTop = 0;
+    storyBody.closest(".story-box").scrollTop = 0;
+
+    if (!s.wiki) {
+      const ph = storyBody.querySelector(".story-photo-holder");
+      if (ph) ph.outerHTML = '<div class="story-photo-holder">📸 這個景點暫無共享照片，實際照片更美</div>';
+      return;
+    }
+    try {
+      const r = await fetch("https://zh.wikipedia.org/api/rest_v1/page/summary/" + encodeURIComponent(s.wiki));
+      if (!r.ok) throw new Error();
+      const d = await r.json();
+      const ph = storyBody.querySelector(".story-photo-holder");
+      if (ph && d.thumbnail && d.thumbnail.source) {
+        const img = document.createElement("img");
+        img.src = d.thumbnail.source;
+        img.className = "story-photo";
+        img.alt = s.title;
+        ph.replaceWith(img);
+      } else if (ph) {
+        ph.outerHTML = '<div class="story-photo-holder">📸 這個景點暫無共享照片，實際照片更美</div>';
+      }
+      const wb = document.getElementById("wikiBlock");
+      if (wb && d.extract) {
+        const short = d.extract.length > 320 ? d.extract.slice(0, 320) + "…" : d.extract;
+        wb.innerHTML = '<div class="story-wiki"><b>📖 小百科：</b>' + short + "</div>";
+      }
+    } catch (e) {
+      const ph = storyBody.querySelector(".story-photo-holder");
+      if (ph) ph.outerHTML = '<div class="story-photo-holder">📸 這個景點暫無共享照片，實際照片更美</div>';
+    }
+  }
+  document.getElementById("storyClose").addEventListener("click", () => modal.classList.remove("show"));
+  modal.addEventListener("click", e => { if (e.target === modal) modal.classList.remove("show"); });
+  document.querySelectorAll(".story-btn").forEach(btn => {
+    btn.addEventListener("click", () => openStory(btn.dataset.story));
+  });
+
+  /* ---------- expense splitter ---------- */
+  const EXP_KEY = "tainan-expense-v1";
+  let members = ["成員 1", "成員 2", "成員 3"];
+  let expenses = [
+    { item: "高鐵來回車票", amount: 2700, note: "桃園↔台南 對號標準廂", payer: 0, shares: [true, true, true] },
+    { item: "住宿兩晚", amount: 9000, note: "安平雅樂軒 雙人房", payer: 1, shares: [true, true, true] },
+    { item: "奇美博物館門票", amount: 650, note: "常設展＋埃及特展", payer: 2, shares: [true, true, true] }
+  ];
+
+  function load() {
+    try {
+      const raw = localStorage.getItem(EXP_KEY);
+      if (raw) {
+        const data = JSON.parse(raw);
+        if (Array.isArray(data.members) && data.members.length === 3) members = data.members;
+        if (Array.isArray(data.expenses)) expenses = data.expenses;
+      }
+    } catch (e) {}
+  }
+  function save() {
+    try {
+      localStorage.setItem(EXP_KEY, JSON.stringify({ members, expenses }));
+    } catch (e) {}
+  }
+  const fmt = n => "NT$" + Math.round(n).toLocaleString("zh-TW");
+
+  function renderMembers() {
+    const box = document.getElementById("memberInputs");
+    box.innerHTML = "";
+    members.forEach((name, i) => {
+      const inp = document.createElement("input");
+      inp.type = "text";
+      inp.value = name;
+      inp.placeholder = "成員 " + (i + 1) + " 名字";
+      inp.addEventListener("input", () => {
+        members[i] = inp.value || ("成員 " + (i + 1));
+        save();
+        renderExpenses();
+        renderSettle();
+      });
+      box.appendChild(inp);
+    });
+  }
+
+  function renderExpenses() {
+    const list = document.getElementById("expenseList");
+    list.innerHTML = "";
+    expenses.forEach((exp, idx) => {
+      const card = document.createElement("div");
+      card.className = "exp-card";
+      const payerOpts = members.map((m, i) =>
+        '<option value="' + i + '"' + (exp.payer === i ? " selected" : "") + ">" + m + "</option>"
+      ).join("");
+      const shareChecks = members.map((m, i) =>
+        '<label class="share-label"><input type="checkbox" data-idx="' + i + '"' + (exp.shares[i] ? " checked" : "") + '><span class="dot"></span>' + m + '</label>'
+      ).join("");
+      card.innerHTML =
+        '<button class="exp-del" title="刪除這筆">✕</button>' +
+        '<div class="exp-top">' +
+          '<input type="text" class="f-item" placeholder="項目（例：Day2 晚餐）" value="' + (exp.item || "") + '">' +
+          '<input type="number" class="f-amount" placeholder="金額" min="0" value="' + (exp.amount || "") + '">' +
+        '</div>' +
+        '<div class="exp-note"><input type="text" class="f-note" placeholder="備註（選填）" value="' + (exp.note || "") + '"></div>' +
+        '<div class="exp-people">' +
+          '<span class="who">💰 支付人：</span>' +
+          '<select class="f-payer" style="width:auto;">' + payerOpts + '</select>' +
+        '</div>' +
+        '<div class="exp-people">' +
+          '<span class="who">👥 花費人（要分攤的人）：</span>' + shareChecks +
+        '</div>';
+
+      card.querySelector(".exp-del").addEventListener("click", () => {
+        expenses.splice(idx, 1);
+        save(); renderExpenses(); renderSettle();
+      });
+      card.querySelector(".f-item").addEventListener("input", e => { exp.item = e.target.value; save(); });
+      card.querySelector(".f-amount").addEventListener("input", e => {
+        exp.amount = parseFloat(e.target.value) || 0;
+        save(); renderSettle();
+      });
+      card.querySelector(".f-note").addEventListener("input", e => { exp.note = e.target.value; save(); });
+      card.querySelector(".f-payer").addEventListener("change", e => {
+        exp.payer = parseInt(e.target.value, 10);
+        save(); renderSettle();
+      });
+      card.querySelectorAll(".share-label input").forEach(cb => {
+        cb.addEventListener("change", () => {
+          exp.shares[parseInt(cb.dataset.idx, 10)] = cb.checked;
+          save(); renderSettle();
+        });
+      });
+      list.appendChild(card);
+    });
+  }
+
+  function renderSettle() {
+    const paid = [0, 0, 0];
+    const owed = [0, 0, 0];
+    let total = 0;
+    expenses.forEach(e => {
+      const n = e.shares.filter(Boolean).length;
+      if (!n || !e.amount) return;
+      total += e.amount;
+      paid[e.payer] += e.amount;
+      e.shares.forEach((s, i) => { if (s) owed[i] += e.amount / n; });
+    });
+    const bal = paid.map((p, i) => p - owed[i]);
+
+    const grid = document.getElementById("settleGrid");
+    grid.innerHTML = members.map((m, i) => {
+      let cls = "diff-zero", txt = "剛好打平";
+      if (bal[i] > 0.5) { cls = "diff-pos"; txt = "應收回 " + fmt(bal[i]); }
+      else if (bal[i] < -0.5) { cls = "diff-neg"; txt = "應補 " + fmt(-bal[i]); }
+      return '<div class="settle-person">' +
+        '<div class="pname">' + m + '</div>' +
+        '<div class="pline">先墊 ' + fmt(paid[i]) + '</div>' +
+        '<div class="pline">應分攤 ' + fmt(owed[i]) + '</div>' +
+        '<div class="pval ' + cls + '">' + txt + '</div>' +
+      '</div>';
+    }).join("");
+
+    // 貪心配對：欠錢的還給多付的
+    const debtors = bal.map((b, i) => ({ i, b })).filter(x => x.b < -0.5).sort((a, b) => a.b - b.b);
+    const creditors = bal.map((b, i) => ({ i, b })).filter(x => x.b > 0.5).sort((a, b) => b.b - a.b);
+    const transfers = [];
+    let di = 0, ci = 0;
+    while (di < debtors.length && ci < creditors.length) {
+      const amt = Math.min(-debtors[di].b, creditors[ci].b);
+      transfers.push({ from: debtors[di].i, to: creditors[ci].i, amt });
+      debtors[di].b += amt;
+      creditors[ci].b -= amt;
+      if (debtors[di].b > -0.5) di++;
+      if (creditors[ci].b < 0.5) ci++;
+    }
+
+    const tBox = document.getElementById("transferList");
+    if (total === 0) {
+      tBox.innerHTML = '<div class="hint">先在上面新增花費，這裡就會自動算出誰該給誰多少錢。</div>';
+    } else if (!transfers.length) {
+      tBox.innerHTML = '<div class="transfer-item">🎉 三人剛好兩清，不用轉帳！</div>';
+    } else {
+      tBox.innerHTML = transfers.map(t =>
+        '<div class="transfer-item">' +
+          '<span>' + members[t.from] + '</span>' +
+          '<span class="arrow">→</span>' +
+          '<span>給 ' + members[t.to] + '</span>' +
+          '<span style="margin-left:auto;">' + fmt(t.amt) + '</span>' +
+        '</div>'
+      ).join("");
+    }
+    document.getElementById("settleHint").textContent =
+      "目前總花費 " + fmt(total) + "，平均每人 " + fmt(total / 3) + "。轉帳建議是讓每人補齊差額的最少筆數組合。";
+  }
+
+  document.getElementById("addExpense").addEventListener("click", () => {
+    expenses.push({ item: "", amount: null, note: "", payer: 0, shares: [true, true, true] });
+    save(); renderExpenses();
+    const cards = document.querySelectorAll(".exp-card");
+    if (cards.length) cards[cards.length - 1].scrollIntoView({ behavior: "smooth", block: "center" });
+  });
+
+  load();
+  renderMembers();
+  renderExpenses();
+  renderSettle();
+</script>
+
+</body>
+</html>
