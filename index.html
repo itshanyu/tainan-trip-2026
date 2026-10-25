@@ -6,38 +6,44 @@
 <meta name="robots" content="noindex">
 <meta name="apple-mobile-web-app-title" content="台南三天兩夜">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="theme-color" content="#DFA77E">
+<meta name="theme-color" content="#FFFCF6">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Huninn&display=swap">
 <title>台南三天兩夜｜10/25-10/27 旅行規劃</title>
 <style>
   :root {
-    --bg: #FFF8EC;
-    --card: #FFFFFF;
-    --text: #4A3F35;
-    --text-light: #9A8C7E;
-    --accent: #DFA77E;
+    --bg: #FFFCF6;
+    --card: #FFFCF6;
+    --text: #3E3A39;
+    --text-light: #6B6563;
+    --accent: #F6D27A;
     --gold: #F5B700;
-    --mint: #1F7A5C;
-    --mint-deep: #1F7A5C;
-    --mint-soft: #E3F2EB;
-    --butter: #F5B700;
+    --mint: #9FDCD8;
+    --mint-deep: #1E6E5C;
+    --mint-soft: #E8F7F5;
+    --butter: #F6D27A;
     --butter-soft: #FFF3D6;
     --butter-deep: #8A6A00;
-    --rose: #E0452B;
+    --rose: #F2A497;
     --rose-soft: #FDECE7;
-    --rose-deep: #C23A22;
-    --lavender: #DFA77E;
-    --lavender-soft: #F5E8DC;
-    --lavender-deep: #A67449;
-    --sky: #2F7DD1;
-    --sky-soft: #E7F1FB;
-    --sky-deep: #2F7DD1;
-    --radius: 18px;
+    --rose-deep: #B94A38;
+    --lavender: #F4B3CF;
+    --lavender-soft: #FDEDF3;
+    --lavender-deep: #A64D7D;
+    --sky: #B8DDF2;
+    --sky-soft: #EAF3FB;
+    --sky-deep: #2F6B9E;
+    --tint-sun: #FFF3D6;
+    --tint-lake: #E8F7F5;
+    --radius: 20px;
+    --line: 3px solid var(--ink);
+    --font: "Huninn", "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", sans-serif;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html, body { overflow-x: clip; }
   html { scroll-behavior: smooth; }
   body {
-    font-family: "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+    font-family: "Huninn", "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", sans-serif;
     background: var(--bg);
     color: var(--text);
     font-size: 17px;
@@ -51,12 +57,14 @@
   @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 
   header {
-    background: linear-gradient(135deg, #DFA77E 0%, #F5B700 100%);
-    border-radius: 24px; padding: 30px 24px 26px; text-align: center; margin-bottom: 18px;
-    color: #fff;
-    box-shadow: 0 4px 16px rgba(223,167,126,0.28);
+    background: var(--card);
+    border: var(--line);
+    border-radius: 28px; padding: 0 24px 26px; text-align: center; margin-bottom: 18px;
+    color: var(--text);
+    overflow: hidden;
   }
-  header h1 { font-size: 1.85rem; font-weight: 800; letter-spacing: 2px; color: #5C3D1E; }
+  .hero-art { display: block; width: calc(100% + 48px); margin: 0 -24px 8px; height: auto; border-bottom: var(--line); background: #EAF6FB; }
+  header h1 { font-size: 1.85rem; font-weight: 400; letter-spacing: 2px; color: var(--text); }
   header .dates {
     display: inline-block; margin-top: 10px; padding: 6px 18px;
     background: rgba(255,255,255,0.94); border-radius: 999px; font-size: 0.92rem; color: #7A5A38; font-weight: 600;
@@ -443,6 +451,80 @@
   .tab .tab-label { font-size: 11px; font-weight: 600; letter-spacing: 1px; }
   .tab.active { color: var(--lavender-deep); }
   .tab.active .icon { filter: none; opacity: 1; transform: translateY(-2px) scale(1.08); }
+
+  /* ---------- 手繪筆記本風格（參考 aiko 說走就走） ---------- */
+  .summary-card, .day-card, .tips, .exp-card, .settle-card, .weather-card, .member-setup, .settle-person, .day-map, .story-box, .gen-result, .import-banner {
+    border: var(--line); box-shadow: none;
+  }
+  .opt { border: 2px solid var(--ink); background: var(--card); }
+  .day-map { border-radius: 16px; }
+  .pill { border: 2px solid var(--ink); color: var(--text); }
+  .pill.addr { background: var(--tint-sun); color: var(--text); }
+  .pill.transit { background: var(--sky-soft); color: var(--text); }
+  .pill.tip { background: var(--rose-soft); color: var(--text); }
+  .pill.free { background: var(--tint-lake); color: var(--text); }
+  .opt-tag { border: 2px solid var(--ink); }
+  .tag-out { background: var(--mint); color: var(--text); }
+  .tag-in { background: var(--sky); color: var(--text); }
+  .tag-exp { background: var(--lavender); color: var(--text); }
+  .tag-niche { background: var(--butter); color: var(--text); }
+  .tag-food { background: var(--rose); color: var(--text); }
+  .badge { border: 2px solid var(--ink); }
+  .badge.theme { background: var(--rose); color: var(--text); }
+  .badge.sight { background: var(--butter); color: var(--text); }
+  .badge.hotel { background: var(--lake); color: var(--text); }
+  .opt-veg { background: var(--tint-lake); border: 2px dashed var(--ink); color: var(--text); }
+  .opt-warn { background: var(--rose-soft); border: 2px dashed var(--ink); color: var(--text); }
+  .map-link { background: var(--sky-soft); color: var(--text); border: 2px solid var(--ink); }
+  .opt-check { border: 2px solid var(--ink); }
+  .pick:checked + .opt-check { background: var(--lake); border-color: var(--ink); }
+  .gen-btn, .map-btn, .story-btn, .add-btn, .w-refresh, .edit-toggle {
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .gen-btn { background: var(--butter); color: var(--text); border: var(--line); box-shadow: none; }
+  .map-btn { background: var(--lake); color: var(--text); border: 2.5px solid var(--ink); }
+  .story-btn { background: var(--lavender); color: var(--text); border: 2px solid var(--ink); }
+  .add-btn { background: var(--tint-lake); border: 2px dashed var(--ink); color: var(--text); }
+  .w-refresh { border: 2.5px solid var(--ink); color: var(--text); }
+  .edit-toggle { background: var(--lavender); color: var(--text); border: 2.5px solid var(--ink); }
+  .mode-btn { border: 2px solid var(--ink); background: var(--card); color: var(--text); }
+  .mode-btn.on { background: var(--sun); color: var(--text); border-color: var(--ink); }
+  .share-label { border: 2px solid #D8CCC0; }
+  .share-label.checked { border-color: var(--ink); }
+  .gen-btn:hover, .map-btn:hover, .story-btn:hover, .add-btn:hover, .w-refresh:hover, .edit-toggle:hover, .mode-btn:hover {
+    transform: translateY(-2px); box-shadow: 0 3px 0 var(--ink);
+  }
+  .gen-btn:hover, .story-btn:hover, .add-btn:hover { background: var(--sun); }
+  .seg { background: transparent; padding: 2px; gap: 6px; }
+  .seg button { border: var(--line); background: var(--card); min-height: 48px; }
+  .seg button.active { background: var(--sun); transform: translateY(-3px); box-shadow: 0 3px 0 var(--ink); color: var(--text); }
+  .timeline li { border-left: 3px dashed var(--ink); }
+  .timeline li::before { border: 3px solid var(--ink); background: var(--mint); box-shadow: none; }
+  .timeline li.food::before { background: var(--butter); box-shadow: none; }
+  .timeline li.move::before { background: var(--sky); box-shadow: none; }
+  .timeline li.pin::before { background: var(--lavender); box-shadow: none; }
+  .tabbar { border-top: var(--line); }
+  .tab.active { color: var(--text); background: var(--tint-sun); border-radius: 14px; }
+  header .dates { background: var(--card); color: var(--text); border: 2px solid var(--ink); }
+  header .clock { color: var(--ink-soft); }
+  .clock b { color: var(--text); }
+  .story-btn:hover, .map-btn:hover { background: var(--sun); }
+  :focus-visible { outline: 3px dashed var(--ink); outline-offset: 3px; border-radius: 8px; }
+
+  /* ---------- 動畫（首頁插畫用） ---------- */
+  @keyframes drift { from { transform: translateX(-14px); } to { transform: translateX(14px); } }
+  @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+  @keyframes ride { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(-26px, 8px); } }
+  @keyframes wave { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(-8px); } }
+  .a-drift { animation: drift 7s ease-in-out infinite alternate; }
+  .a-drift2 { animation: drift 9s ease-in-out infinite alternate-reverse; }
+  .a-bob { animation: bob 4s ease-in-out infinite; transform-box: fill-box; }
+  .a-ride { animation: ride 6s ease-in-out infinite; }
+  .a-wave { animation: wave 4s ease-in-out infinite; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
 </style>
 </head>
 <body>
@@ -450,6 +532,30 @@
   <!-- ================= 總覽 ================= -->
   <section class="page active" id="page-home">
     <header>
+      <svg class="hero-art" viewBox="0 0 360 230" role="img" aria-label="插圖：台南的陽光、赤崁樓、億載金城與運河小船" fill="none" stroke="#3E3A39" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+        <g class="a-bob"><circle cx="306" cy="40" r="17" fill="#F6D27A"/></g>
+        <g class="a-drift"><path d="M34 46 c-2-12 14-18 22-10 c4-10 22-8 22 4 c10-2 14 12 4 14 h-44 c-8 0-10-8-4-8z" fill="#FFFCF6"/></g>
+        <g class="a-drift2"><path d="M196 28 c-2-10 12-14 18-7 c4-8 18-6 18 4 c8-1 10 10 3 11 h-36 c-6 0-8-7-3-8z" fill="#FFFCF6"/></g>
+        <g class="a-drift" stroke-width="2"><path d="M148 44 q5-6 10 0 M166 36 q5-6 10 0"/></g>
+        <path d="M104 90 q24-16 48 0" fill="#CBB8EC"/>
+        <path d="M126 74 v8" stroke-width="2.5"/><circle cx="126" cy="72" r="3" fill="#F2A497"/>
+        <rect x="110" y="90" width="36" height="8" fill="#CBB8EC"/>
+        <path d="M94 106 q34-20 72 0" fill="#B8DDF2"/>
+        <rect x="100" y="106" width="60" height="46" fill="#B8DDF2"/>
+        <path d="M112 152 v-18 c0-4 12-4 12 0 v18" fill="#FFFCF6"/>
+        <rect x="132" y="134" width="20" height="18" fill="#FFFCF6"/>
+        <rect x="226" y="128" width="112" height="24" fill="#FFF3D6"/>
+        <path d="M226 128 h14 v-8 h14 v8 h14 v-8 h14 v8 h14 v-8 h14 v8 h14 v-8 h14 v8" fill="#FFF3D6"/>
+        <path d="M296 104 v24" stroke-width="2.5"/>
+        <path d="M296 104 l26 6 l-26 6z" fill="#F2A497"/>
+        <path d="M-4 152 C 40 136, 90 144, 130 152 C 170 140, 230 138, 280 152 C 310 144, 340 142, 364 150 V162 H-4z" fill="#B9DAA5"/>
+        <path d="M52 150 C54 134 48 122 56 104"/>
+        <path d="M54 124 C42 116 34 118 26 112 M55 116 C67 108 74 110 82 104 M53 138 C42 136 36 140 30 136" stroke-width="2.5"/>
+        <rect x="-4" y="158" width="368" height="76" fill="#9FDCD8" stroke="none"/>
+        <path d="M-4 158 h368"/>
+        <g class="a-wave"><path d="M24 196 c10-6 20 6 30 0 M120 212 c10-6 20 6 30 0 M232 200 c10-6 20 6 30 0 M300 218 c10-6 20 6 30 0"/></g>
+        <g class="a-ride"><path d="M206 190 l48 0 l-8 14 h-32z" fill="#F4B3CF"/><path d="M230 190 v-16" stroke-width="2.5"/><path d="M230 174 l18 8 l-18 8z" fill="#FFFCF6"/></g>
+      </svg>
       <h1>台南三天兩夜</h1>
       <div class="dates">2026.10.25（日）～ 10.27（二）</div>
       <div class="badges">
